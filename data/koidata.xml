@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<timestamp created="2025-01-12" lastModified="2025-01-12" />
+<koitypes enabled="books,games,equipment">
+    <metadata key="read" default="No" />
+    <metadata key="completed" default="No" />
+    <metadata key="lang" default="English" />
+</koitypes>
+<data>
+    <books>
+        <book title="" author="" read="" dateCompleted="" rating="" collections="" tags="" />
+    </books>
+    <games>
+        <game title="" platform="" completed="" rating="" collections="" tags="" />
+    </games>
+    <equipment>
+        <item label="" category="" dateAcquired="" manufacturer="" />
+    </equipment>
+    <workouts>
+        <workout date="" category="" duration="" distance="" avghr="" />
+    </workouts>
+</data>

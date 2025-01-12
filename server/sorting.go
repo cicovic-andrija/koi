@@ -40,7 +40,7 @@ func bookTitleStandard(i *Item, j *Item) bool {
 	return false
 }
 
-func seriesTitleBinding(i *Item, j *Item) bool {
+func groupedUnderSeries(i *Item, j *Item) bool {
 	// TODO: Implement this function.
 	return false
 }
