@@ -1,21 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<timestamp created="2025-01-12" lastModified="2025-01-12" />
-<koitypes enabled="books,games,equipment">
-    <metadata key="read" default="No" />
-    <metadata key="completed" default="No" />
-    <metadata key="lang" default="English" />
-</koitypes>
-<data>
-    <books>
-        <book title="" author="" read="" dateCompleted="" rating="" collections="" tags="" />
-    </books>
-    <games>
-        <game title="" platform="" completed="" rating="" collections="" tags="" />
-    </games>
-    <equipment>
-        <item label="" category="" dateAcquired="" manufacturer="" />
-    </equipment>
-    <workouts>
-        <workout date="" category="" duration="" distance="" avghr="" />
-    </workouts>
-</data>
+<koidatabase created="2025-01-12" lastModified="2025-01-12">
+    <koitypes enabled="books,games,equipment">
+        <metadata key="books/read" default="No" />
+        <metadata key="games/completed" default="No" />
+        <metadata key="books/lang" default="English" />
+    </koitypes>
+    <data>
+        <books>
+            <book title="aa" author="" read="" dateCompleted="" rating="" collections="" tags="" />
+            <book title="bb" author="" read="" dateCompleted="" rating="" collections="" tags="" />
+        </books>
+        <games>
+            <game title="cc" platform="" completed="" rating="" collections="" tags="" />
+        </games>
+        <equipment>
+            <item label="dd" category="" dateAcquired="" manufacturer="" />
+        </equipment>
+        <workouts>
+            <workout date="dd" category="" duration="" distance="" avghr="" />
+        </workouts>
+    </data>
+</koidatabase>

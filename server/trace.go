@@ -12,7 +12,8 @@ const (
 	_control TracePrefix = "control"
 	_env     TracePrefix = "env"
 	_error   TracePrefix = "error"
-	_parser  TracePrefix = "parser"
+	_warning TracePrefix = "warning"
+	_decoder TracePrefix = "decoder"
 	_https   TracePrefix = "https"
 )
 
