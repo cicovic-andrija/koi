@@ -3,27 +3,33 @@ package server
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
+// Run configures the system, builds the database, and boots the server.
 func Run() {
-	err := buildDatabase()
-	if err != nil {
-		trace(_control, "main: %v", err)
-	}
+	trace(_control, "main: start: %s v0.1", filepath.Base(os.Args[0]))
+	readEnvironment()
+	buildDatabase() // TODO: Check error.
+	_serverControl.boot()
+}
+
+// TODO: Implement this function.
+func readEnvironment() {
+	_serverControl.endpoint = "localhost:8072"
+	_database.filePath = "data/koidata.xml"
 }
 
 func buildDatabase() error {
-	filename := "data/koidata.xml"
-	file, err := os.Open(filename)
+	file, err := os.Open(_database.filePath)
 	if err != nil {
-		return fmt.Errorf("failed to open file %s: %v", filename, err)
+		return fmt.Errorf("failed to open file %s: %v", _database.filePath, err)
 	}
 	defer file.Close()
 
 	if err = DecodeDatabase(file); err != nil {
-		return fmt.Errorf("failed to decode database in %s: %v", filename, err)
+		return fmt.Errorf("failed to decode database in %s: %v", _database.filePath, err)
 	}
 
 	return nil
-
 }

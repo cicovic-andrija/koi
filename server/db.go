@@ -36,6 +36,7 @@ type Catalogue struct {
 // the data. Concurrent R/W operations are not thread-safe. In fact,
 // none of the Database methods are thread-safe.
 type Database struct {
+	filePath     string
 	created      time.Time
 	lastModified time.Time
 
@@ -46,7 +47,7 @@ type Database struct {
 }
 
 // Global database instance.
-var db = &Database{
+var _database = &Database{
 	items:        []*Item{},
 	defaults:     map[string]string{},
 	enabledTypes: set.NewStringSet(),
@@ -67,12 +68,15 @@ func (db *Database) AddItem(typeKey string, metadata map[string]string) *Item {
 	return item
 }
 
-// TODO
+// MetadataValue returns metadata associated with the given key.
+// Zero value, when returned, indicates that there was no
+// metadata associated with the key.
 func (i *Item) MetadataValue(key string) string {
 	return i.Metadata[key]
 }
 
-// TODO
+// SetLabel sets the Item's Label property as defined
+// by its type and metadata.
 func (i *Item) SetLabel() bool {
 	switch i.Type {
 	case "books":

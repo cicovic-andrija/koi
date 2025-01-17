@@ -24,11 +24,6 @@ const (
 	XMLATTR_ENABLED      = "enabled"
 )
 
-type XMLNodeMetadata struct {
-	Key          string `xml:"key,attr"`
-	DefaultValue string `xml:"default,attr"`
-}
-
 func DecodeDatabase(r io.Reader) error {
 	if r == nil {
 		return ErrNilReader
@@ -46,12 +41,12 @@ func DecodeDatabase(r io.Reader) error {
 	if ts, err := time.Parse(time.DateOnly, created); err != nil {
 		return fmt.Errorf("failed to detect or decode attribute <%s %s>: %w", XMLNODE_KOIDATABASE, XMLATTR_CREATED, err)
 	} else {
-		db.created = ts
+		_database.created = ts
 	}
 	if ts, err := time.Parse(time.DateOnly, lastModified); err != nil {
 		return fmt.Errorf("failed to detect or decode attribute <%s %s>: %w", XMLNODE_KOIDATABASE, XMLATTR_LASTMODIFIED, err)
 	} else {
-		db.lastModified = ts
+		_database.lastModified = ts
 	}
 	trace(_decoder, "created=%s, lastModified=%s", created, lastModified)
 
@@ -68,7 +63,7 @@ func DecodeDatabase(r io.Reader) error {
 		return fmt.Errorf("failed to decode attribute <%s %s>: invalid typelist format", XMLNODE_KOITYPES, XMLATTR_ENABLED)
 	} else {
 		for _, t := range enabledTypes {
-			db.enabledTypes.Insert(t)
+			_database.enabledTypes.Insert(t)
 		}
 		trace(_decoder, "enabled types: %q", strings.Join(enabledTypes, ", "))
 	}
@@ -90,7 +85,7 @@ func DecodeDatabase(r io.Reader) error {
 			if !isValidDefaultMetadataValueKeyRE(metadata.Key) {
 				return fmt.Errorf("failed to decode <%s>: invalid attribute format", XMLNODE_METADATA)
 			}
-			db.defaults[metadata.Key] = metadata.DefaultValue
+			_database.defaults[metadata.Key] = metadata.DefaultValue
 			trace(_decoder, "predefined default [%s]->%s", metadata.Key, metadata.DefaultValue)
 		} else {
 			// </koitypes>
@@ -115,7 +110,7 @@ func DecodeDatabase(r io.Reader) error {
 				decoder.Skip()
 				continue
 			}
-			if !db.enabledTypes.Contains(typeKey) {
+			if !_database.enabledTypes.Contains(typeKey) {
 				trace(_decoder, "skipping XML node <%s> entirely: type is not enabled", typeKey)
 				decoder.Skip()
 				continue
@@ -137,10 +132,14 @@ func DecodeDatabase(r io.Reader) error {
 					}
 					itemMetadata := make(map[string]string)
 					for _, attr := range currentNode.Attr {
-						itemMetadata[attr.Name.Local] = attr.Value
+						if isValidMetadataKey(attr.Name.Local) {
+							itemMetadata[attr.Name.Local] = attr.Value
+						} else {
+							trace(_warning, "skipping attribute <%s %s>: invalid metadata key format", itemKey, attr.Name.Local)
+						}
 					}
-					if item := db.AddItem(typeKey, itemMetadata); item == nil {
-						trace(_warning, "failed to add item of type %q to the database, check item attributes", typeKey)
+					if item := _database.AddItem(typeKey, itemMetadata); item == nil {
+						trace(_warning, "failed to add item of type %q to the database, check item metadata", typeKey)
 						decoder.Skip()
 						continue
 					}
