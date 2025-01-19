@@ -1,9 +1,17 @@
 package server
 
 import (
+	"strings"
 	"time"
 
 	"src.acicovic.me/koipond/set"
+)
+
+// Special metadata keys.
+const (
+	MDLabelKey       = "label"
+	MDCollectionsKey = "collections"
+	MDTagsKey        = "tags"
 )
 
 // Item is a generic object stored in the database identified by
@@ -40,17 +48,25 @@ type Database struct {
 	created      time.Time
 	lastModified time.Time
 
-	items []*Item
+	items       []*Item
+	collections map[string][]*Item
+	tags        map[string][]*Item
 
-	enabledTypes set.Strings
-	defaults     map[string]string
+	enabledTypes        set.Strings
+	declaredCollections map[string]string
+	hiddenCollections   set.Strings
+	defaults            map[string]string
 }
 
 // Global database instance.
 var _database = &Database{
-	items:        []*Item{},
-	defaults:     map[string]string{},
-	enabledTypes: set.NewStringSet(),
+	items:               []*Item{},
+	collections:         map[string][]*Item{},
+	tags:                map[string][]*Item{},
+	enabledTypes:        set.NewStringSet(),
+	declaredCollections: map[string]string{},
+	hiddenCollections:   set.NewStringSet(),
+	defaults:            map[string]string{},
 }
 
 // AddItem creates and adds a new item to the Database. The function
@@ -61,10 +77,45 @@ func (db *Database) AddItem(typeKey string, metadata map[string]string) *Item {
 		Type:     typeKey,
 		Metadata: metadata,
 	}
+
 	if ok := item.SetLabel(); !ok {
 		return nil
 	}
+
+	// item is valid at this point, anything optional goes below
 	db.items = append(db.items, item)
+
+	// invalid collection names are ignored
+	if collections := metadata[MDCollectionsKey]; collections != "" {
+		itemsCollections := []string{}
+		for _, collectionKey := range strings.Split(collections, ",") {
+			collectionKey = strings.TrimSpace(collectionKey)
+			if isValidCollectionKey(collectionKey) {
+				_, declared := db.declaredCollections[collectionKey]
+				if declared && !db.hiddenCollections.Contains(collectionKey) {
+					itemsCollections = append(itemsCollections, collectionKey)
+				}
+			}
+		}
+		for _, c := range itemsCollections {
+			db.collections[c] = append(db.collections[c], item)
+		}
+	}
+
+	// invalid tag names are ignored
+	if tags := metadata[MDTagsKey]; tags != "" {
+		itemsTags := []string{}
+		for _, t := range strings.Split(tags, ",") {
+			t := strings.TrimSpace(t)
+			if isValidTag(t) {
+				itemsTags = append(itemsTags, t)
+			}
+		}
+		for _, t := range itemsTags {
+			db.tags[t] = append(db.tags[t], item)
+		}
+	}
+
 	return item
 }
 
@@ -83,10 +134,8 @@ func (i *Item) SetLabel() bool {
 		i.Label = i.Metadata["title"]
 	case "games":
 		i.Label = i.Metadata["title"]
-	case "workouts":
-		i.Label = i.Metadata["date"]
 	default:
-		i.Label = i.Metadata["label"]
+		i.Label = i.Metadata[MDLabelKey]
 	}
 	return i.Label != ""
 }
@@ -122,8 +171,6 @@ func IsValidItemKeyWordForType(key string, typeKey string) bool {
 		return key == "book"
 	case "games":
 		return key == "game"
-	case "workouts":
-		return key == "workout"
 	}
 	return false
 }

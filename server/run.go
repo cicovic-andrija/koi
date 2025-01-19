@@ -10,7 +10,7 @@ import (
 func Run() {
 	trace(_control, "main: start: %s v0.1", filepath.Base(os.Args[0]))
 	readEnvironment()
-	buildDatabase() // TODO: Check error.
+	buildDatabase()
 	_serverControl.boot()
 }
 
@@ -23,12 +23,12 @@ func readEnvironment() {
 func buildDatabase() error {
 	file, err := os.Open(_database.filePath)
 	if err != nil {
-		return fmt.Errorf("failed to open file %s: %v", _database.filePath, err)
+		panic(fmt.Errorf("failed to open file %s: %v", _database.filePath, err))
 	}
 	defer file.Close()
 
 	if err = DecodeDatabase(file); err != nil {
-		return fmt.Errorf("failed to decode database in %s: %v", _database.filePath, err)
+		panic(fmt.Errorf("failed to decode database in %s: %v", _database.filePath, err))
 	}
 
 	return nil

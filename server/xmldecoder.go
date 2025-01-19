@@ -22,6 +22,9 @@ const (
 	XMLNODE_METADATA     = "metadata"
 	XMLNODE_KOITYPES     = "koitypes"
 	XMLATTR_ENABLED      = "enabled"
+	XMLNODE_COLLECTIONS  = "collections"
+	XMLNODE_COLLECTION   = "collection"
+	XMLATTR_HIDDEN       = "hidden"
 )
 
 func DecodeDatabase(r io.Reader) error {
@@ -65,7 +68,7 @@ func DecodeDatabase(r io.Reader) error {
 		for _, t := range enabledTypes {
 			_database.enabledTypes.Insert(t)
 		}
-		trace(_decoder, "enabled types: %q", strings.Join(enabledTypes, ", "))
+		trace(_decoder, "enabled types: %s", strings.Join(enabledTypes, ", "))
 	}
 
 	// <koitypes> <metadata ... /> 0..N </koitypes>
@@ -89,6 +92,50 @@ func DecodeDatabase(r io.Reader) error {
 			trace(_decoder, "predefined default [%s]->%s", metadata.Key, metadata.DefaultValue)
 		} else {
 			// </koitypes>
+			trace(_decoder, "XML node <%s> decoding completed", XMLNODE_KOITYPES)
+			break
+		}
+	}
+
+	// <collections ...>
+	currentNode, err = expectStart(decoder, XMLNODE_COLLECTIONS)
+	if err != nil {
+		return fmt.Errorf("failed to detect <%s>: %w", XMLNODE_COLLECTIONS, err)
+	}
+	hiddenCollectionsStr, found := findAttribute(currentNode, XMLATTR_HIDDEN)
+	if found {
+		if hiddenCollections := splitJoinedWords(hiddenCollectionsStr); hiddenCollections == nil {
+			return fmt.Errorf("failed to decode attribute <%s %s>: invalid keylist format", XMLNODE_COLLECTIONS, XMLATTR_HIDDEN)
+		} else {
+			for _, c := range hiddenCollections {
+				_database.hiddenCollections.Insert(c)
+			}
+			trace(_decoder, "hidden collections: %s", strings.Join(hiddenCollections, ", "))
+		}
+	}
+
+	// <collections> <collection ... /> 0..N </collections>
+	for {
+		if currentNode, err = nextOrEnd(decoder, XMLNODE_COLLECTION, XMLNODE_COLLECTIONS); err != nil {
+			return fmt.Errorf("failed to detect <%s> or </%s>: %w", XMLNODE_COLLECTION, XMLNODE_COLLECTIONS, err)
+		}
+		if currentNode != nil {
+			// <collection ...>
+			var collection = &struct {
+				Key  string `xml:"key,attr"`
+				Name string `xml:"name,attr"`
+			}{}
+			if err = decoder.DecodeElement(collection, currentNode); err != nil {
+				return fmt.Errorf("failed to decode <%s>: %w", XMLNODE_COLLECTION, err)
+			}
+			if !isValidCollectionKey(collection.Key) {
+				return fmt.Errorf("failed to decode <%s>: invalid attribute format", XMLNODE_COLLECTION)
+			}
+			_database.declaredCollections[collection.Key] = collection.Name
+			trace(_decoder, "declared collection [%s]->%q", collection.Key, collection.Name)
+		} else {
+			// </collections>
+			trace(_decoder, "XML node <%s> decoding completed", XMLNODE_COLLECTIONS)
 			break
 		}
 	}
@@ -153,6 +200,7 @@ func DecodeDatabase(r io.Reader) error {
 			}
 		} else {
 			// </data>
+			trace(_decoder, "XML node <%s> decoding completed", XMLNODE_DATA)
 			break
 		}
 	}

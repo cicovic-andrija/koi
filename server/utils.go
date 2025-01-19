@@ -24,8 +24,16 @@ func splitJoinedWords(s string) []string {
 	return words
 }
 
-func isValidWord(tag string) bool {
-	return wordRE.MatchString(tag)
+func isValidTag(tag string) bool {
+	return isValidWord(tag)
+}
+
+func isValidCollectionKey(key string) bool {
+	return isValidWord(key)
+}
+
+func isValidWord(word string) bool {
+	return wordRE.MatchString(word)
 }
 
 func isValidMetadataKey(key string) bool {

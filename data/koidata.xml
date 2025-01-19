@@ -4,6 +4,11 @@
         <metadata key="games/completed" default="No" />
         <metadata key="books/lang" default="English" />
     </koitypes>
+    <collections hidden="discworld">
+        <collection key="murakami" name="Haruki Murakami's Books" />
+        <collection key="discworld" name="Discworld Books" />
+        <collection key="divingequipment" name="SCUBA Diving Equipment" />
+    </collections>
     <data>
         <books>
             <book title="aa" author="" read="" dateCompleted="" rating="" collections="" tags="" />
@@ -13,10 +18,7 @@
             <game title="cc" platform="" completed="" rating="" collections="" tags="" />
         </games>
         <equipment>
-            <item label="dd" category="" dateAcquired="" manufacturer="" />
+            <item label="dd" category="" dateAcquired="" manufacturer="" collections="" tags="" />
         </equipment>
-        <workouts>
-            <workout date="dd" category="" duration="" distance="" avghr="" />
-        </workouts>
     </data>
 </koidatabase>
