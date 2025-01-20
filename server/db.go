@@ -48,9 +48,9 @@ type Database struct {
 	created      time.Time
 	lastModified time.Time
 
-	items       []*Item
-	collections map[string][]*Item
-	tags        map[string][]*Item
+	items        []*Item
+	collectioned map[string][]*Item
+	tagged       map[string][]*Item
 
 	enabledTypes        set.Strings
 	declaredCollections map[string]string
@@ -61,31 +61,31 @@ type Database struct {
 // Global database instance.
 var _database = &Database{
 	items:               []*Item{},
-	collections:         map[string][]*Item{},
-	tags:                map[string][]*Item{},
+	collectioned:        map[string][]*Item{},
+	tagged:              map[string][]*Item{},
 	enabledTypes:        set.NewStringSet(),
 	declaredCollections: map[string]string{},
 	hiddenCollections:   set.NewStringSet(),
 	defaults:            map[string]string{},
 }
 
-// AddItem creates and adds a new item to the Database. The function
+// Creates and adds a new item to the Database. The function
 // returns a pointer to the item, or nil if the item could not be added.
-func (db *Database) AddItem(typeKey string, metadata map[string]string) *Item {
+func (db *Database) add(typeKey string, metadata map[string]string) *Item {
 	item := &Item{
 		ID:       len(db.items),
 		Type:     typeKey,
 		Metadata: metadata,
 	}
 
-	if ok := item.SetLabel(); !ok {
+	if ok := item.setLabel(); !ok {
 		return nil
 	}
 
 	// item is valid at this point, anything optional goes below
 	db.items = append(db.items, item)
 
-	// invalid collection names are ignored
+	// index collection (invalid collection names are ignored)
 	if collections := metadata[MDCollectionsKey]; collections != "" {
 		itemsCollections := []string{}
 		for _, collectionKey := range strings.Split(collections, ",") {
@@ -98,11 +98,11 @@ func (db *Database) AddItem(typeKey string, metadata map[string]string) *Item {
 			}
 		}
 		for _, c := range itemsCollections {
-			db.collections[c] = append(db.collections[c], item)
+			db.collectioned[c] = append(db.collectioned[c], item)
 		}
 	}
 
-	// invalid tag names are ignored
+	// index tags (invalid tag names are ignored)
 	if tags := metadata[MDTagsKey]; tags != "" {
 		itemsTags := []string{}
 		for _, t := range strings.Split(tags, ",") {
@@ -112,11 +112,43 @@ func (db *Database) AddItem(typeKey string, metadata map[string]string) *Item {
 			}
 		}
 		for _, t := range itemsTags {
-			db.tags[t] = append(db.tags[t], item)
+			db.tagged[t] = append(db.tagged[t], item)
 		}
 	}
 
 	return item
+}
+
+func (db *Database) collections() map[string]string {
+	collections := make(map[string]string)
+	for key := range db.collectioned {
+		collections[key] = db.declaredCollections[key]
+	}
+	return collections
+}
+
+func (db *Database) tags() map[string]int {
+	tags := map[string]int{}
+	for tag, items := range db.tagged {
+		tags[tag] = len(items)
+	}
+	return tags
+}
+
+func (db *Database) lastID() int {
+	return len(db.items) - 1
+}
+
+func (db *Database) singleItem(id int) *Item {
+	return db.items[id]
+}
+
+func (db *Database) collectionCatalogue(key string) *Catalogue {
+	return MakeCatalogue(db.collectioned[key])
+}
+
+func (db *Database) catalogueOfTaggedItems(tag string) *Catalogue {
+	return MakeCatalogue(db.tagged[tag])
 }
 
 // MetadataValue returns metadata associated with the given key.
@@ -126,9 +158,7 @@ func (i *Item) MetadataValue(key string) string {
 	return i.Metadata[key]
 }
 
-// SetLabel sets the Item's Label property as defined
-// by its type and metadata.
-func (i *Item) SetLabel() bool {
+func (i *Item) setLabel() bool {
 	switch i.Type {
 	case "books":
 		i.Label = i.Metadata["title"]
@@ -140,9 +170,41 @@ func (i *Item) SetLabel() bool {
 	return i.Label != ""
 }
 
-// SortItems sorts the passed slice as defined by item type.
+func (c *Catalogue) HasMultipleGroups() bool {
+	return len(c.Groups) > 1
+}
+
+// MakeCatalogue creates a Catalogue from the passed slice of items.
+func MakeCatalogue(items []*Item) *Catalogue {
+	if len(items) == 0 {
+		return nil
+	}
+
+	catalogue := &Catalogue{Group(items)}
+	for _, group := range catalogue.Groups {
+		Sort(group)
+	}
+	return catalogue
+}
+
+// Group splits the passed slice into groups (new slices)
+// of items having the same Type.
+func Group(items []*Item) map[string][]*Item {
+	if len(items) == 0 {
+		return nil
+	}
+
+	groups := map[string][]*Item{}
+	for _, item := range items {
+		groups[item.Type] = append(groups[item.Type], item)
+	}
+
+	return groups
+}
+
+// Sort sorts the passed slice of items as defined by item type.
 // The function assumes that all items are of the same type.
-func SortItems(items []*Item) {
+func Sort(items []*Item) {
 	if len(items) == 0 {
 		return
 	}
@@ -156,6 +218,20 @@ func SortItems(items []*Item) {
 		By(label).Sort(items)
 	default:
 		By(label).Sort(items)
+	}
+}
+
+// TypeLabel returns the label to be used in rendering of an item's type.
+func (i *Item) TypeLabel() string {
+	switch i.Type {
+	case "books":
+		return "Book"
+	case "games":
+		return "Game"
+	case "equipment":
+		return "Equipment part"
+	default:
+		return "Inventory item"
 	}
 }
 

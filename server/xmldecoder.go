@@ -185,7 +185,7 @@ func DecodeDatabase(r io.Reader) error {
 							trace(_warning, "skipping attribute <%s %s>: invalid metadata key format", itemKey, attr.Name.Local)
 						}
 					}
-					if item := _database.AddItem(typeKey, itemMetadata); item == nil {
+					if item := _database.add(typeKey, itemMetadata); item == nil {
 						trace(_warning, "failed to add item of type %q to the database, check item metadata", typeKey)
 						decoder.Skip()
 						continue

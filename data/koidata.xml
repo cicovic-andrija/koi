@@ -4,21 +4,27 @@
         <metadata key="games/completed" default="No" />
         <metadata key="books/lang" default="English" />
     </koitypes>
-    <collections hidden="discworld">
+    <collections>
+        <collection key="books" name="Book Library" />
+        <collection key="diving" name="SCUBA Diving Equipment" />
         <collection key="murakami" name="Haruki Murakami's Books" />
+        <collection key="tolkien" name="Tolkien's Legendarium" />
         <collection key="discworld" name="Discworld Books" />
-        <collection key="divingequipment" name="SCUBA Diving Equipment" />
+        <collection key="boardgames" name="Board Game Library" />
+        <collection key="videogames" name="Video Game Library" />
+        <collection key="swcart" name="Switch Cartridges" />
+        <collection key="pscds" name="PlayStation CDs" />
     </collections>
     <data>
         <books>
-            <book title="aa" author="" read="" dateCompleted="" rating="" collections="" tags="" />
-            <book title="bb" author="" read="" dateCompleted="" rating="" collections="" tags="" />
+            <book title="Hear the Wind Sing" author="Haruki Murakami" dateCompleted="03.01.2025." collections="books,murakami" tags="fiction,novels,ebooks" />
+            <book title="Pinball, 1973" author="Haruki Murakami" dateCompleted="17.01.2025." collections="books,murakami" tags="fiction,novels,ebooks" />
         </books>
         <games>
-            <game title="cc" platform="" completed="" rating="" collections="" tags="" />
+            <game title="Xenoblade Chronicles 2" series="Xenoblade" platform="Nintendo Switch" completed="Yes" rating="5/5" collections="videogames,swcart" tags="physical" />
         </games>
         <equipment>
-            <item label="dd" category="" dateAcquired="" manufacturer="" collections="" tags="" />
+            <item label="Smart Air Dive Computer" category="SCUBA Diving" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="scuba" />
         </equipment>
     </data>
 </koidatabase>
