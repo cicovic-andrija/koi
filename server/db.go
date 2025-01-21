@@ -24,7 +24,7 @@ const (
 // with a valid name) are handled the same, but there are hard-coded
 // specific behaviours for certain special types that change the way
 // some operations are performed depending on the type,
-// e.g. the SortItems function.
+// e.g. the Sort function.
 type Item struct {
 	ID       int               `json:"id"`
 	Type     string            `json:"type"`
@@ -80,6 +80,16 @@ func (db *Database) add(typeKey string, metadata map[string]string) *Item {
 
 	if ok := item.setLabel(); !ok {
 		return nil
+	}
+
+	// set default metadata where it's missing
+	for key, defaultValue := range db.defaults {
+		if strings.HasPrefix(key, typeKey+"/") {
+			key = strings.TrimPrefix(key, typeKey+"/")
+			if item.Metadata[key] == "" {
+				item.Metadata[key] = defaultValue
+			}
+		}
 	}
 
 	// item is valid at this point, anything optional goes below
@@ -151,23 +161,30 @@ func (db *Database) catalogueOfTaggedItems(tag string) *Catalogue {
 	return MakeCatalogue(db.tagged[tag])
 }
 
-// MetadataValue returns metadata associated with the given key.
-// Zero value, when returned, indicates that there was no
-// metadata associated with the key.
-func (i *Item) MetadataValue(key string) string {
-	return i.Metadata[key]
+// Tags returns a slice of item's tags.
+func (i *Item) Tags() (tags []string) {
+	for _, tag := range strings.Split(i.Metadata[MDTagsKey], ",") {
+		tags = append(tags, strings.TrimSpace(tag))
+	}
+	return
 }
 
-func (i *Item) setLabel() bool {
-	switch i.Type {
-	case "books":
-		i.Label = i.Metadata["title"]
-	case "games":
-		i.Label = i.Metadata["title"]
-	default:
-		i.Label = i.Metadata[MDLabelKey]
+func (i *Item) setLabel() (ok bool) {
+	i.Label = i.Metadata[MetadataKeyForItemLabel(i.Type)]
+	ok = i.Label != ""
+	return
+}
+
+func (c *Catalogue) Tags() []string {
+	tags := set.NewStringSet()
+	for _, group := range c.Groups {
+		for _, item := range group {
+			for _, tag := range item.Tags() {
+				tags.Insert(tag)
+			}
+		}
 	}
-	return i.Label != ""
+	return tags.ToSlice()
 }
 
 func (c *Catalogue) HasMultipleGroups() bool {
@@ -196,7 +213,8 @@ func Group(items []*Item) map[string][]*Item {
 
 	groups := map[string][]*Item{}
 	for _, item := range items {
-		groups[item.Type] = append(groups[item.Type], item)
+		typeLabel := GroupTypeLabel(item.Type)
+		groups[typeLabel] = append(groups[typeLabel], item)
 	}
 
 	return groups
@@ -204,6 +222,7 @@ func Group(items []*Item) map[string][]*Item {
 
 // Sort sorts the passed slice of items as defined by item type.
 // The function assumes that all items are of the same type.
+// <#hardcoded#>
 func Sort(items []*Item) {
 	if len(items) == 0 {
 		return
@@ -221,9 +240,21 @@ func Sort(items []*Item) {
 	}
 }
 
+func MetadataKeyForItemLabel(typeKey string) string {
+	switch typeKey {
+	case "books":
+		return "title"
+	case "games":
+		return "title"
+	default:
+		return MDLabelKey
+	}
+}
+
 // TypeLabel returns the label to be used in rendering of an item's type.
-func (i *Item) TypeLabel() string {
-	switch i.Type {
+// <#hardcoded#>
+func TypeLabel(typeKey string) string {
+	switch typeKey {
 	case "books":
 		return "Book"
 	case "games":
@@ -235,9 +266,26 @@ func (i *Item) TypeLabel() string {
 	}
 }
 
+// TypeGroupLabel returns the label to be used in rendering
+// of type name for a group of items.
+// <#hardcoded#>
+func GroupTypeLabel(typeKey string) string {
+	switch typeKey {
+	case "books":
+		return "Books"
+	case "games":
+		return "Games"
+	case "equipment":
+		return "Equipment items"
+	default:
+		return typeKey
+	}
+}
+
 // IsValidItemKeyWordForType checks if the key is a valid single
 // item keyword in the database (e.g. "book" for "books" type).
 // Keyword "item" is always valid for every type.
+// <#hardcoded#>
 func IsValidItemKeyWordForType(key string, typeKey string) bool {
 	if key == "item" {
 		return true

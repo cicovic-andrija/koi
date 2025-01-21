@@ -1,27 +1,31 @@
-<koidatabase created="2025-01-12" lastModified="2025-01-12">
+<koidatabase created="2025-01-12" lastModified="2025-01-20">
     <koitypes enabled="books,games,equipment">
-        <metadata key="books/read" default="No" />
+        <metadata key="books/completed" default="No" />
         <metadata key="games/completed" default="No" />
         <metadata key="books/lang" default="English" />
     </koitypes>
-    <collections>
+    <collections hidden="dajana">
         <collection key="books" name="Book Library" />
-        <collection key="diving" name="SCUBA Diving Equipment" />
         <collection key="murakami" name="Haruki Murakami's Books" />
         <collection key="tolkien" name="Tolkien's Legendarium" />
         <collection key="discworld" name="Discworld Books" />
+        <collection key="dajana" name="Dajana's Books" />
         <collection key="boardgames" name="Board Game Library" />
         <collection key="videogames" name="Video Game Library" />
-        <collection key="swcart" name="Switch Cartridges" />
+        <collection key="swcarts" name="Switch Cartridges" />
         <collection key="pscds" name="PlayStation CDs" />
+        <collection key="diving" name="SCUBA Diving Equipment" />
     </collections>
     <data>
         <books>
-            <book title="Hear the Wind Sing" author="Haruki Murakami" dateCompleted="03.01.2025." collections="books,murakami" tags="fiction,novels,ebooks" />
-            <book title="Pinball, 1973" author="Haruki Murakami" dateCompleted="17.01.2025." collections="books,murakami" tags="fiction,novels,ebooks" />
+            <book title="Hear the Wind Sing" author="Haruki Murakami" completed="Yes" dateCompleted="03.01.2025." collections="books,murakami" tags="novel,ebook,translation" />
+            <book title="Pinball, 1973" author="Haruki Murakami" completed="Yes" dateCompleted="17.01.2025." collections="books,murakami" tags="novel,ebook,translation" />
         </books>
         <games>
-            <game title="Xenoblade Chronicles 2" series="Xenoblade" platform="Nintendo Switch" completed="Yes" rating="5/5" collections="videogames,swcart" tags="physical" />
+            <game title="Xenoblade Chronicles: Definitive Edition" series="Xenoblade#1" platform="Nintendo Switch" studio="Monolith Soft" completed="Yes" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
+            <game title="Xenoblade Chronicles 2" series="Xenoblade#2" platform="Nintendo Switch" studio="Monolith Soft" completed="Yes" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
+            <game title="Xenoblade Chronicles 2: Torna - The Golden Country" series="Xenoblade#3" platform="Nintendo Switch" studio="Monolith Soft" collections="videogames,swcarts" tags="physical,scifi" />
+            <game title="Xenoblade Chronicles 3" series="Xenoblade#4" platform="Nintendo Switch" studio="Monolith Soft" collections="videogames,swcarts" tags="physical,scifi" />
         </games>
         <equipment>
             <item label="Smart Air Dive Computer" category="SCUBA Diving" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="scuba" />

@@ -18,3 +18,11 @@ func (s Strings) Contains(str string) bool {
 	_, found := s[str]
 	return found
 }
+
+func (s Strings) ToSlice() []string {
+	r := make([]string, 0, len(s))
+	for k := range s {
+		r = append(r, k)
+	}
+	return r
+}

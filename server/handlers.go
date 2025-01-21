@@ -1,6 +1,7 @@
 package server
 
 import (
+	"html/template"
 	"net/http"
 	"strconv"
 )
@@ -16,6 +17,9 @@ func multiplexer() http.Handler {
 
 	mux.HandleFunc("GET /tags", renderTags) // /tags/{$}: 404
 	trace(_https, "handler registered for GET /tags")
+
+	mux.HandleFunc("GET /tags/{tag}", renderTag)
+	trace(_https, "handler registered for GET /tags/{tag}")
 
 	mux.HandleFunc("GET /items/{id}", renderItem)
 	trace(_https, "handler registered for GET /items/{id}")
@@ -50,10 +54,11 @@ func renderCollection(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	renderTemplate(w, Page{
-		Key:        "catalogue",
-		Title:      _database.declaredCollections[key],
-		Supertitle: "Collection",
-		Data:       catalogue,
+		Key:         "catalogue",
+		Title:       _database.declaredCollections[key],
+		Supertitle:  "Collection",
+		DisplayTags: true,
+		Data:        catalogue,
 	})
 }
 
@@ -66,13 +71,35 @@ func renderTags(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func renderTag(w http.ResponseWriter, r *http.Request) {
+	tag := r.PathValue("tag")
+	catalogue := _database.catalogueOfTaggedItems(tag)
+	if catalogue == nil {
+		renderNotFound(w, "Tag not found.")
+		return
+	}
+	renderTemplate(w, Page{
+		Key:        "catalogue",
+		Title:      tag,
+		Supertitle: "Items tagged with",
+		Data:       catalogue,
+	})
+}
+
 func renderItem(w http.ResponseWriter, r *http.Request) {
-	itemID := convertAndCheckID(r.PathValue("id"), _database.lastID())
+	itemID, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil || itemID < 0 || itemID > _database.lastID() {
+		renderNotFound(w, "Item not found.")
+		return
+	}
+
 	item := _database.singleItem(itemID)
 	renderTemplate(w, Page{
-		Key:        "item",
-		Title:      item.Label,
-		Supertitle: item.TypeLabel(),
+		Key:         item.Type + "/item",
+		Title:       item.Label,
+		Supertitle:  TypeLabel(item.Type),
+		DisplayTags: true,
+		Data:        item,
 	})
 }
 
@@ -85,10 +112,25 @@ func renderNotFound(w http.ResponseWriter, content string) {
 	})
 }
 
-func convertAndCheckID(idStr string, max int) int {
-	id, err := strconv.Atoi(idStr)
-	if err != nil || id < 1 || id > max {
-		return 0
+// Page is a data structure passed to the template rendering engine.
+type Page struct {
+	Key         string
+	Title       string
+	Supertitle  string
+	DisplayTags bool
+	Data        any
+}
+
+// <#hardcoded#>
+var pageTemplate = template.Must(template.ParseFiles(
+	"data/koipond-main.html",
+	"data/koipond-style.html",
+	"data/koipond-books.html",
+))
+
+func renderTemplate(w http.ResponseWriter, p Page) {
+	err := pageTemplate.Execute(w, p)
+	if err != nil {
+		trace(_error, "http: render template: %v", err)
 	}
-	return id
 }
