@@ -153,6 +153,10 @@ func (db *Database) singleItem(id int) *Item {
 	return db.items[id]
 }
 
+func (db *Database) catalogueOfEverything() *Catalogue {
+	return MakeCatalogue(db.items)
+}
+
 func (db *Database) collectionCatalogue(key string) *Catalogue {
 	return MakeCatalogue(db.collectioned[key])
 }
@@ -162,6 +166,7 @@ func (db *Database) catalogueOfTaggedItems(tag string) *Catalogue {
 }
 
 // Tags returns a slice of item's tags.
+// TODO: Handle no tags.
 func (i *Item) Tags() (tags []string) {
 	for _, tag := range strings.Split(i.Metadata[MDTagsKey], ",") {
 		tags = append(tags, strings.TrimSpace(tag))
@@ -175,6 +180,8 @@ func (i *Item) setLabel() (ok bool) {
 	return
 }
 
+// Tags returns a slice of tags found in the catalogue.
+// TODO: Handle no tags.
 func (c *Catalogue) Tags() []string {
 	tags := set.NewStringSet()
 	for _, group := range c.Groups {

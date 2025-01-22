@@ -21,6 +21,9 @@ func multiplexer() http.Handler {
 	mux.HandleFunc("GET /tags/{tag}", renderTag)
 	trace(_https, "handler registered for GET /tags/{tag}")
 
+	mux.HandleFunc("GET /items", renderItems) // /items/{$}: 404
+	trace(_https, "handler registered for GET /items")
+
 	mux.HandleFunc("GET /items/{id}", renderItem)
 	trace(_https, "handler registered for GET /items/{id}")
 
@@ -86,6 +89,15 @@ func renderTag(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func renderItems(w http.ResponseWriter, r *http.Request) {
+	renderTemplate(w, Page{
+		Key:        "catalogue",
+		Title:      "Items",
+		Supertitle: "All",
+		Data:       _database.catalogueOfEverything(),
+	})
+}
+
 func renderItem(w http.ResponseWriter, r *http.Request) {
 	itemID, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil || itemID < 0 || itemID > _database.lastID() {
@@ -126,6 +138,7 @@ var pageTemplate = template.Must(template.ParseFiles(
 	"data/koipond-main.html",
 	"data/koipond-style.html",
 	"data/koipond-books.html",
+	"data/koipond-games.html",
 ))
 
 func renderTemplate(w http.ResponseWriter, p Page) {

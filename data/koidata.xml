@@ -3,6 +3,8 @@
         <metadata key="books/completed" default="No" />
         <metadata key="games/completed" default="No" />
         <metadata key="books/lang" default="English" />
+        <metadata key="games/forTwo" default="No" />
+        <metadata key="games/star" default="No" />
     </koitypes>
     <collections hidden="dajana">
         <collection key="books" name="Book Library" />
@@ -22,6 +24,8 @@
             <book title="Pinball, 1973" author="Haruki Murakami" completed="Yes" dateCompleted="17.01.2025." collections="books,murakami" tags="novel,ebook,translation" />
         </books>
         <games>
+            <game title="Age of War" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
+            <game title="Catan" completed="N/A" rating="3/5" collections="boardgames" />
             <game title="Xenoblade Chronicles: Definitive Edition" series="Xenoblade#1" platform="Nintendo Switch" studio="Monolith Soft" completed="Yes" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
             <game title="Xenoblade Chronicles 2" series="Xenoblade#2" platform="Nintendo Switch" studio="Monolith Soft" completed="Yes" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
             <game title="Xenoblade Chronicles 2: Torna - The Golden Country" series="Xenoblade#3" platform="Nintendo Switch" studio="Monolith Soft" collections="videogames,swcarts" tags="physical,scifi" />
