@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{ template "koipond-style.html" }}
+    {{ template "style.html" }}
     <title>{{ .Title }}</title>
 </head>
 <body>
     <!-- NAVIGATION -->
     <header>
-            |
-            <a href="/collections">collections</a> |
-            <a href="/tags">tags</a> |
-            <a href="/items">all items</a> |
-            <a href="https://github.com/cicovic-andrija/koipond" target="_blank">code</a> |
+        <b><a style="text-decoration: none;" href="/collections">池 collections</a></b> ⋅
+        <b><a style="text-decoration: none;" href="/tags">漁 tags</a></b> ⋅
+        <b><a style="text-decoration: none;" href="/items">鯉 items</a></b> ⋅
+        <b><a style="text-decoration: none;" href="https://github.com/cicovic-andrija/koipond" target="_blank">機 code</a></b>
     </header>
 
     <!-- SUPERTITLE, TITLE -->
@@ -27,7 +26,7 @@
 
     {{ if eq .Key "collections" }} <!-- BRANCH -->
     {{ range $key, $value := .Data }}
-    <a href="/collections/{{ $key }}">{{ $value }}</a><br>
+    <a href="/collections/{{ $key }}">池 {{ $value }}</a><br>
     {{ end }}
     {{ else if eq .Key "tags" }} <!-- BRANCH -->
     <table class="of-tags">
@@ -40,19 +39,26 @@
     </table>
     {{ else if eq .Key "catalogue" }} <!-- BRANCH -->
     {{ range $groupLabel, $group := .Data.Groups }}
-    {{ if $.Data.HasMultipleGroups }}<h3>{{ $groupLabel }}</h3>{{ end }}
-    <ol>
-    {{ range $group }}<li><a href="/items/{{ .ID }}">{{ .Label }}</a></li>{{ end }}
-    </ol>
+    {{ if $.Data.HasMultipleGroups }}<h3>{{ $groupLabel }}</h3>{{ else }}<p></p>{{ end }}
+    {{ range $group }}<a href="/items/{{ .ID }}">鯉 {{ .Label }}</a><br>{{ end }}
     {{ end }}
     {{ else if eq .Key "not-found" }} <!-- BRANCH -->
     <p>{{ .Data }}</p>
     {{ else if eq .Key "books/item" }} <!-- <#hardcoded#> -->
-    {{ template "koipond-books.html" .Data }}
+    {{ template "books.html" .Data }}
     {{ else if eq .Key "games/item" }} <!-- <#hardcoded#> -->
-    {{ template "koipond-games.html" .Data }}
+    {{ template "games.html" .Data }}
     {{ else }} <!-- all the other types -->
+    <table>
+    {{ range $key, $value := .Data.Metadata }}{{ if ne $key "collections" }}{{ if ne $key "tags" }}
+        <tr>
+            <td><b>{{ ToUpper $key }}</b></td>
+            <td>{{ $value }}</td>
+        </tr>
+    {{ end }}{{ end }}{{ end }}
+    </table>
     {{ end }} <!-- END -->
+
+    <br>
 </body>
 </html>
-<p></p>

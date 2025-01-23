@@ -52,7 +52,7 @@
             <game title="Xenoblade Chronicles 3" series="Xenoblade#4" platform="Nintendo Switch" studio="Monolith Soft" completed="No" collections="videogames,swcarts" tags="physical,scifi" />
         </games>
         <equipment>
-            <item label="Smart Air Dive Computer" category="SCUBA Diving" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="scuba" />
+            <item label="Smart Air Dive Computer" category="SCUBA Diving" description="Dive computer" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="scuba" />
         </equipment>
     </data>
 </koidatabase>

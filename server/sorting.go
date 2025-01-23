@@ -41,9 +41,9 @@ func sortHintOrTitle(i *Item, j *Item) bool {
 	if a == "" {
 		a = i.Metadata[titleKey]
 	}
-	b := i.Metadata[MDSortingHintKey]
+	b := j.Metadata[MDSortingHintKey]
 	if b == "" {
-		b = i.Metadata[titleKey]
+		b = j.Metadata[titleKey]
 	}
 	return a < b
 }
@@ -57,9 +57,9 @@ func groupedUnderSeries(i *Item, j *Item) bool {
 	if a == "" {
 		a = i.Metadata[titleKey]
 	}
-	b := i.Metadata[seriesKey]
+	b := j.Metadata[seriesKey]
 	if b == "" {
-		b = i.Metadata[titleKey]
+		b = j.Metadata[titleKey]
 	}
 	return a < b
 }

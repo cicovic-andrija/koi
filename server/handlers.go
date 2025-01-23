@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func multiplexer() http.Handler {
@@ -134,15 +135,17 @@ type Page struct {
 }
 
 // <#hardcoded#>
-var pageTemplate = template.Must(template.ParseFiles(
-	"data/koipond-main.html",
-	"data/koipond-style.html",
-	"data/koipond-books.html",
-	"data/koipond-games.html",
+var pageTemplate = template.Must(template.New("page").Funcs(template.FuncMap{
+	"ToUpper": strings.ToUpper,
+}).ParseFiles(
+	"data/main.html",
+	"data/style.html",
+	"data/books.html",
+	"data/games.html",
 ))
 
 func renderTemplate(w http.ResponseWriter, p Page) {
-	err := pageTemplate.Execute(w, p)
+	err := pageTemplate.ExecuteTemplate(w, "main.html", p)
 	if err != nil {
 		trace(_error, "http: render template: %v", err)
 	}
