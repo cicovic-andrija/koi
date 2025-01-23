@@ -12,6 +12,7 @@ const (
 	MDLabelKey       = "label"
 	MDCollectionsKey = "collections"
 	MDTagsKey        = "tags"
+	MDSortingHintKey = "sortBy"
 )
 
 // Item is a generic object stored in the database identified by
@@ -230,7 +231,7 @@ func Sort(items []*Item) {
 
 	switch items[0].Type {
 	case "books":
-		By(bookTitleStandard).Sort(items)
+		By(sortHintOrTitle).Sort(items)
 	case "games":
 		By(groupedUnderSeries).Sort(items)
 	case "equipment":

@@ -30,20 +30,21 @@
             <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
             <game title="Catan" platform="Board game" completed="N/A" rating="3/5" collections="boardgames" />
             <game title="Dune (2019)" platform="Board game" star="Yes" completed="N/A" rating="5/5" collections="boardgames" tags="scifi" />
-            <game title="Exploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly" />
+            <game title="Exploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,translation" />
             <game title="Streaking Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,expansion" />
             <game title="Imploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,expansion" />
             <game title="Jaipur" platform="Board game" completed="N/A" forTwo="Yes" rating="3/5" collections="boardgames" />
-            <game title="Omerta" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly" />
+            <game title="Omerta" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,translation" />
             <game title="Pax Pamir" platform="Board game" completed="N/A" forTwo="Yes" start="Yes" rating="5/5" collections="boardgames" />
-            <game title="Terraforming Mars: Ares Expedition" platform="Board game" completed="N/A" forTwo="Yes" rating="5/5" collections="boardgames" tags="scifi" />
+            <game title="Terraforming Mars: Ares Expedition" platform="Board game" completed="N/A" forTwo="Yes" rating="5/5" collections="boardgames" tags="scifi,translation" />
             <game title="Ticket to Ride: Nordic Countries" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" />
             <game title="Wingspan" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames" />
             <game title="7 Wonders: Duel" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" />
             <game title="7 Wonders: Pantheon" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames" tags="expansion" />
-            <game title="White Castle" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" tags="japan" />
+            <game title="White Castle" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" tags="japan,translation" />
             <game title="Everdell" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames" />
             <game title="Mind the Gap" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="2/5" collections="boardgames" tags="cardonly" />
+            <game title="Sea Salt and Paper" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,translation" />
 
             <game title="Xenoblade Chronicles: Definitive Edition" series="Xenoblade#1" platform="Nintendo Switch" studio="Monolith Soft" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
             <game title="Xenoblade Chronicles 2" series="Xenoblade#2" platform="Nintendo Switch" studio="Monolith Soft" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />

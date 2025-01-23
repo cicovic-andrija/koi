@@ -35,12 +35,31 @@ func label(i *Item, j *Item) bool {
 	return i.Label < j.Label
 }
 
-func bookTitleStandard(i *Item, j *Item) bool {
-	// TODO: Implement this function.
-	return false
+func sortHintOrTitle(i *Item, j *Item) bool {
+	const titleKey = "title"
+	a := i.Metadata[MDSortingHintKey]
+	if a == "" {
+		a = i.Metadata[titleKey]
+	}
+	b := i.Metadata[MDSortingHintKey]
+	if b == "" {
+		b = i.Metadata[titleKey]
+	}
+	return a < b
 }
 
 func groupedUnderSeries(i *Item, j *Item) bool {
-	// TODO: Implement this function.
-	return false
+	const (
+		titleKey  = "title"
+		seriesKey = "series"
+	)
+	a := i.Metadata[seriesKey]
+	if a == "" {
+		a = i.Metadata[titleKey]
+	}
+	b := i.Metadata[seriesKey]
+	if b == "" {
+		b = i.Metadata[titleKey]
+	}
+	return a < b
 }
