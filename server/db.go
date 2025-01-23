@@ -113,17 +113,8 @@ func (db *Database) add(typeKey string, metadata map[string]string) *Item {
 	}
 
 	// index tags (invalid tag names are ignored)
-	if tags := metadata[MDTagsKey]; tags != "" {
-		itemsTags := []string{}
-		for _, t := range strings.Split(tags, ",") {
-			t := strings.TrimSpace(t)
-			if isValidTag(t) {
-				itemsTags = append(itemsTags, t)
-			}
-		}
-		for _, t := range itemsTags {
-			db.tagged[t] = append(db.tagged[t], item)
-		}
+	for _, tag := range item.Tags() {
+		db.tagged[tag] = append(db.tagged[tag], item)
 	}
 
 	return item
@@ -166,10 +157,12 @@ func (db *Database) catalogueOfTaggedItems(tag string) *Catalogue {
 }
 
 // Tags returns a slice of item's tags.
-// TODO: Handle no tags.
 func (i *Item) Tags() (tags []string) {
 	for _, tag := range strings.Split(i.Metadata[MDTagsKey], ",") {
-		tags = append(tags, strings.TrimSpace(tag))
+		tag = strings.TrimSpace(tag)
+		if isValidTag(tag) {
+			tags = append(tags, tag)
+		}
 	}
 	return
 }
@@ -181,7 +174,6 @@ func (i *Item) setLabel() (ok bool) {
 }
 
 // Tags returns a slice of tags found in the catalogue.
-// TODO: Handle no tags.
 func (c *Catalogue) Tags() []string {
 	tags := set.NewStringSet()
 	for _, group := range c.Groups {
@@ -194,6 +186,7 @@ func (c *Catalogue) Tags() []string {
 	return tags.ToSlice()
 }
 
+// HasMultipleGroups reports whether a Catalogue has more than one group.
 func (c *Catalogue) HasMultipleGroups() bool {
 	return len(c.Groups) > 1
 }

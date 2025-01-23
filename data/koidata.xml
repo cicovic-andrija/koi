@@ -1,10 +1,13 @@
 <koidatabase created="2025-01-12" lastModified="2025-01-20">
     <koitypes enabled="books,games,equipment">
         <metadata key="books/completed" default="No" />
-        <metadata key="games/completed" default="No" />
+        <metadata key="games/completed" default="Yes" />
         <metadata key="books/lang" default="English" />
         <metadata key="games/forTwo" default="No" />
         <metadata key="games/star" default="No" />
+        <metadata key="games/rating" default="?/5" />
+        <metadata key="games/studio" default="N/A" />
+        <metadata key="games/platform" default="N/A" />
     </koitypes>
     <collections hidden="dajana">
         <collection key="books" name="Book Library" />
@@ -24,12 +27,28 @@
             <book title="Pinball, 1973" author="Haruki Murakami" completed="Yes" dateCompleted="17.01.2025." collections="books,murakami" tags="novel,ebook,translation" />
         </books>
         <games>
-            <game title="Age of War" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
-            <game title="Catan" completed="N/A" rating="3/5" collections="boardgames" />
-            <game title="Xenoblade Chronicles: Definitive Edition" series="Xenoblade#1" platform="Nintendo Switch" studio="Monolith Soft" completed="Yes" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
-            <game title="Xenoblade Chronicles 2" series="Xenoblade#2" platform="Nintendo Switch" studio="Monolith Soft" completed="Yes" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
-            <game title="Xenoblade Chronicles 2: Torna - The Golden Country" series="Xenoblade#3" platform="Nintendo Switch" studio="Monolith Soft" collections="videogames,swcarts" tags="physical,scifi" />
-            <game title="Xenoblade Chronicles 3" series="Xenoblade#4" platform="Nintendo Switch" studio="Monolith Soft" collections="videogames,swcarts" tags="physical,scifi" />
+            <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
+            <game title="Catan" platform="Board game" completed="N/A" rating="3/5" collections="boardgames" />
+            <game title="Dune (2019)" platform="Board game" star="Yes" completed="N/A" rating="5/5" collections="boardgames" tags="scifi" />
+            <game title="Exploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly" />
+            <game title="Streaking Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,expansion" />
+            <game title="Imploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,expansion" />
+            <game title="Jaipur" platform="Board game" completed="N/A" forTwo="Yes" rating="3/5" collections="boardgames" />
+            <game title="Omerta" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly" />
+            <game title="Pax Pamir" platform="Board game" completed="N/A" forTwo="Yes" start="Yes" rating="5/5" collections="boardgames" />
+            <game title="Terraforming Mars: Ares Expedition" platform="Board game" completed="N/A" forTwo="Yes" rating="5/5" collections="boardgames" tags="scifi" />
+            <game title="Ticket to Ride: Nordic Countries" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" />
+            <game title="Wingspan" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames" />
+            <game title="7 Wonders: Duel" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" />
+            <game title="7 Wonders: Pantheon" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames" tags="expansion" />
+            <game title="White Castle" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" tags="japan" />
+            <game title="Everdell" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames" />
+            <game title="Mind the Gap" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="2/5" collections="boardgames" tags="cardonly" />
+
+            <game title="Xenoblade Chronicles: Definitive Edition" series="Xenoblade#1" platform="Nintendo Switch" studio="Monolith Soft" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
+            <game title="Xenoblade Chronicles 2" series="Xenoblade#2" platform="Nintendo Switch" studio="Monolith Soft" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
+            <game title="Xenoblade Chronicles 2: Torna - The Golden Country" series="Xenoblade#3" platform="Nintendo Switch" studio="Monolith Soft" completed="No" rating="5/5" collections="videogames,swcarts" tags="physical,scifi" />
+            <game title="Xenoblade Chronicles 3" series="Xenoblade#4" platform="Nintendo Switch" studio="Monolith Soft" completed="No" collections="videogames,swcarts" tags="physical,scifi" />
         </games>
         <equipment>
             <item label="Smart Air Dive Computer" category="SCUBA Diving" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="scuba" />
