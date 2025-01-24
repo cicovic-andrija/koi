@@ -11,6 +11,7 @@
 </koitypes>
 <collections hidden="dajana">
 <collection key="books" name="Book Library" />
+<collection key="textbooks" name="Textbooks" />
 <collection key="murakami" name="Haruki Murakami's Books" />
 <collection key="tolkien" name="Tolkien's Legendarium" />
 <collection key="discworld" name="Discworld Books" />
@@ -23,8 +24,12 @@
 </collections>
 <data>
 <books>
-<book title="Hear the Wind Sing" author="Haruki Murakami" completed="Yes" dateCompleted="03.01.2025." collections="books,murakami" tags="novel,ebook,translation" />
-<book title="Pinball, 1973" author="Haruki Murakami" completed="Yes" dateCompleted="17.01.2025." collections="books,murakami" tags="novel,ebook,translation" />
+<book title="Hear the Wind Sing" author="Haruki Murakami" completed="Yes" dateCompleted="03.01.2025." collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
+<book title="Pinball, 1973" author="Haruki Murakami" completed="Yes" dateCompleted="17.01.2025." collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
+<book title="A Wild Sheep Chase" author="Haruki Murakami" completed="Yes" dateCompleted="29.07.2024." sortBy="Wild Sheep Chase" collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
+<book title="Dance Dance Dance" author="Haruki Murakami" completed="Yes" dateCompleted="20.06.2024." sortBy="Wild Sheep Chase" collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
+<book title="Windows Internals (7th Edition)" author="Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon" collections="textbooks" tags="ebook,kindle" />
+<book title="Antifragile" author="Nassim Taleb" collections="books" tags="ebook,kindle" />
 </books>
 <games>
 <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
@@ -57,7 +62,11 @@
 <game title="God of War (2018)" platform="PS4" studio="Santa Monica Studio" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,openworld" />
 <game title="NieR: Automata" platform="PS4" studio="Square Enix" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,openworld" />
 <game title="Dead Space" platform="PS5" studio="Motive" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,remaster" />
-<game title="Ghost of Tsushima - Director's Cut" platform="PS5" studio="Sucker Punch" completed="Yes" rating="5/5" collections="videogames,pscds" tags="physical,openworld,japan,dlc" />
+<game title="Ghost of Tsushima - Director's Cut" platform="PS5" studio="Sucker Punch" rating="5/5" collections="videogames,pscds" tags="physical,openworld,japan,dlc" />
+<game title="It Takes Two" platform="Switch" studio="Hazelight Studios" forTwo="Yes" rating="5/5" collections="videogames" tags="digital,cooperative" />
+<game title="Dave the Diver" platform="Switch" studio="Mintrocket" completed="No" rating="3/5" collections="videogames" tags="digital" />
+<game title="Return of the Obra Dinn" platform="Windows" studio="Lucas Pope" rating="5/5" collections="videogames" tags="digital" />
+<game title="Prince of Persia: The Sands of Time" platform="Windows" studio="Ubisoft Montreal" rating="4/5" collections="videogames" tags="digital" />
 </games>
 <equipment>
 <item label="Smart Air Dive Computer" category="SCUBA Diving" description="Dive computer" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="scuba" />
