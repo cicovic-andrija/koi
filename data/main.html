@@ -8,9 +8,9 @@
 </head>
 <body>
     <header>
-        <b><a style="text-decoration: none;" href="/collections">池 collections</a></b> ⋅
-        <b><a style="text-decoration: none;" href="/tags">漁 tags</a></b> ⋅
-        <b><a style="text-decoration: none;" href="/items">鯉 items</a></b>
+        <b><a href="/collections">池 collections</a></b> ⋅
+        <b><a href="/tags">漁 tags</a></b> ⋅
+        <b><a href="/items">鯉 items</a></b>
     </header>
 
     {{ if .Supertitle }}<h4>{{ .Supertitle }}</h4>{{ end }}
@@ -25,6 +25,7 @@
     {{ range $key, $value := .Data }}
     <a href="/collections/{{ $key }}">⋅ {{ $value }} ⋅</a><br>
     {{ end }}
+    {{ if RenderRepoLink }}<p class="m-t"><b><a href="https://github.com/cicovic-andrija/koipond" target="_blank">機 code</a></b></p>{{ end }}
     {{ else if eq .Key "tags" }} <!-- BRANCH -->
     <table class="of-tags">
     {{ range $key, $value := .Data }}

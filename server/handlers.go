@@ -142,6 +142,13 @@ func renderNotFound(w http.ResponseWriter, content string) {
 	})
 }
 
+func renderTemplate(w http.ResponseWriter, p Page) {
+	err := _pageTemplate.ExecuteTemplate(w, "main.html", p)
+	if err != nil {
+		trace(_error, "http: render template: %v", err)
+	}
+}
+
 // Page is a data structure passed to the template rendering engine.
 type Page struct {
 	Key         string
@@ -151,19 +158,22 @@ type Page struct {
 	Data        any
 }
 
-// <#hardcoded#>
-var pageTemplate = template.Must(template.New("page").Funcs(template.FuncMap{
-	"ToUpper": strings.ToUpper,
-}).ParseFiles(
-	"data/main.html",
-	"data/style.html",
-	"data/books.html",
-	"data/games.html",
-))
+// Global variables related to rendering.
+var (
+	// <#hardcoded#>
+	_pageTemplate = template.Must(template.New("page").Funcs(template.FuncMap{
+		"ToUpper":        strings.ToUpper,
+		"RenderRepoLink": RenderRepoLink,
+	}).ParseFiles(
+		"data/main.html",
+		"data/style.html",
+		"data/books.html",
+		"data/games.html",
+	))
 
-func renderTemplate(w http.ResponseWriter, p Page) {
-	err := pageTemplate.ExecuteTemplate(w, "main.html", p)
-	if err != nil {
-		trace(_error, "http: render template: %v", err)
-	}
+	_renderRepoLink = true
+)
+
+func RenderRepoLink() bool {
+	return _renderRepoLink
 }

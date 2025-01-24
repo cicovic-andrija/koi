@@ -1,0 +1,18 @@
+[Unit]
+Description=Koipond Inventory Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+Environment="DIVELOG_MODE=prod"
+Environment="DIVELOG_PORT=52000"
+User=uname
+WorkingDirectory=/srv
+ExecStart=/srv/koipond
+StandardOutput=append:/srv/koipond.log
+StandardError=append:/srv/koipond.err.log
+
+[Install]
+WantedBy=multi-user.target
