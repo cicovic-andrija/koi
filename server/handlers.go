@@ -3,6 +3,7 @@ package server
 import (
 	"html/template"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -28,15 +29,8 @@ func multiplexer() http.Handler {
 	mux.HandleFunc("GET /items/{id}", renderItem)
 	trace(_https, "handler registered for GET /items/{id}")
 
-	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		renderNotFound(w, "Page not found.")
-	})
+	mux.HandleFunc("GET /", defaultHandler)
 	trace(_https, "handler registered for GET /")
-
-	mux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
-		http.Redirect(w, r, "/collections", http.StatusMovedPermanently)
-	})
-	trace(_https, "handler registered for GET /{$}")
 
 	return mux
 }
@@ -114,6 +108,29 @@ func renderItem(w http.ResponseWriter, r *http.Request) {
 		DisplayTags: true,
 		Data:        item,
 	})
+}
+
+func defaultHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.URL.Path {
+	case "/":
+		http.Redirect(w, r, "/collections", http.StatusMovedPermanently)
+	case "/favicon.ico":
+		var (
+			icon *os.File
+			fi   os.FileInfo
+		)
+		icon, err := os.Open("data/favicon.ico")
+		if err == nil {
+			fi, err = icon.Stat()
+		}
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		http.ServeContent(w, r, "favicon.ico", fi.ModTime(), icon)
+	default:
+		renderNotFound(w, "Page not found.")
+	}
 }
 
 func renderNotFound(w http.ResponseWriter, content string) {

@@ -27,7 +27,7 @@
             <book title="Pinball, 1973" author="Haruki Murakami" completed="Yes" dateCompleted="17.01.2025." collections="books,murakami" tags="novel,ebook,translation" />
         </books>
         <games>
-            <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
+            <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan,aaa,bbb,ccc,ddd,eee,fff,ggg,hhh,eee,rrr,qqq" />
             <game title="Catan" platform="Board game" completed="N/A" rating="3/5" collections="boardgames" />
             <game title="Dune (2019)" platform="Board game" star="Yes" completed="N/A" rating="5/5" collections="boardgames" tags="scifi" />
             <game title="Exploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,translation" />

@@ -7,48 +7,45 @@
     <title>{{ .Title }}</title>
 </head>
 <body>
-    <!-- NAVIGATION -->
     <header>
         <b><a style="text-decoration: none;" href="/collections">池 collections</a></b> ⋅
         <b><a style="text-decoration: none;" href="/tags">漁 tags</a></b> ⋅
-        <b><a style="text-decoration: none;" href="/items">鯉 items</a></b> ⋅
-        <b><a style="text-decoration: none;" href="https://github.com/cicovic-andrija/koipond" target="_blank">機 code</a></b>
+        <b><a style="text-decoration: none;" href="/items">鯉 items</a></b>
     </header>
 
-    <!-- SUPERTITLE, TITLE -->
     {{ if .Supertitle }}<h4>{{ .Supertitle }}</h4>{{ end }}
     <h1>{{ .Title }}</h1>
-    <p></p>
 
-    {{ if .DisplayTags }}{{ range .Data.Tags }}
-    <a class="tag-link" href="/tags/{{ . }}">{{ . }}</a>
-    {{ end }}{{ end }}
+    {{ if .DisplayTags }}<p></p><div class="tag-list">{{ range .Data.Tags }}
+    <a class="tag-link" href="/tags/{{ . }}">{{ . }}</a>{{ end }}
+    </div>{{ end }}
 
     {{ if eq .Key "collections" }} <!-- BRANCH -->
+    <p></p>
     {{ range $key, $value := .Data }}
-    <a href="/collections/{{ $key }}">池 {{ $value }}</a><br>
+    <a href="/collections/{{ $key }}">⋅ {{ $value }} ⋅</a><br>
     {{ end }}
     {{ else if eq .Key "tags" }} <!-- BRANCH -->
     <table class="of-tags">
     {{ range $key, $value := .Data }}
     <tr>
         <td><a class="tag-link" href="/tags/{{ $key }}">{{ $key }}</a></td>
-        <td>&nbsp;({{ $value }} items)</td>
+        <td>{{ $value }} items</td>
     </tr>
     {{ end }}
     </table>
     {{ else if eq .Key "catalogue" }} <!-- BRANCH -->
     {{ range $groupLabel, $group := .Data.Groups }}
     {{ if $.Data.HasMultipleGroups }}<h3>{{ $groupLabel }}</h3>{{ else }}<p></p>{{ end }}
-    {{ range $group }}<a href="/items/{{ .ID }}">鯉 {{ .Label }}</a><br>{{ end }}
+    {{ range $group }}<a href="/items/{{ .ID }}">⋅ {{ .Label }} ⋅</a><br>{{ end }}
     {{ end }}
     {{ else if eq .Key "not-found" }} <!-- BRANCH -->
     <p>{{ .Data }}</p>
-    {{ else if eq .Key "books/item" }} <!-- <#hardcoded#> -->
+    {{ else if eq .Key "books/item" }} <!-- <#hardcoded#> BRANCH -->
     {{ template "books.html" .Data }}
-    {{ else if eq .Key "games/item" }} <!-- <#hardcoded#> -->
+    {{ else if eq .Key "games/item" }} <!-- <#hardcoded#> BRANCH -->
     {{ template "games.html" .Data }}
-    {{ else }} <!-- all the other types -->
+    {{ else }} <!-- all the other item types BRANCH -->
     <table>
     {{ range $key, $value := .Data.Metadata }}{{ if ne $key "collections" }}{{ if ne $key "tags" }}
         <tr>
@@ -59,6 +56,6 @@
     </table>
     {{ end }} <!-- END -->
 
-    <br>
+    <footer></footer>
 </body>
 </html>

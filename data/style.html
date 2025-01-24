@@ -3,40 +3,46 @@
         background-color: #E3E3E3;
     }
     body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 10px;
+        align-items: center;
         margin: 0 auto;
         min-height: 100vh;
         max-width: 650px;
+        background-color: #F9F9F9;
         line-height: 1.4;
         font-size: 18px;
         font-family: "Lato", "Arial", "Helvetica", sans-serif;
         color: #008080;
-        background-color: #F9F9F9;
-        padding: 0 10px;
     }
     @media only screen and (max-width: 768px) {
         body {
             max-width: 100%;
         }
     }
-    header {
-        margin-bottom: 32px;
-        line-height: 1.8;
-    }
-    footer {
+    header, footer {
         margin-top: 32px;
-        line-height: 1.8;
+        margin-bottom: 32px;
     }
     h1, h4 {
-        margin: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 32px;
+        margin-right: 32px;
         line-height: 1;
+        text-align: center;
         color: #FF7F50;
     }
     h2, h3 {
+        text-align: center;
         color: #FF7F50;
     }
     a {
         color: #008080;
         text-decoration: none;
+        text-align: center;
     }
     a:hover {
         color: #FF7F50;
@@ -46,38 +52,34 @@
     }
     table td {
         min-width: 120px;
-        padding-left: 12px;
         border-bottom: 1px #d3d3d3 solid;
     }
     table.of-tags td {
         min-width: auto;
-        padding-left: 0;
+        padding-left: 10px;
+        padding-right: 10px;
         border-bottom: 0;
     }
-    .tag {
-        display: inline-block;
-        padding: 1px 10px;
-        margin: 0;
-        font-size: small;
-        font-weight: bold;
-        background-color: #008080;
-        color: white;
-        border-radius: 4px;
+    .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 32px;
+        margin-right: 32px;
+        justify-content: center;
     }
     .tag-link {
         display: inline-block;
         padding: 1px 10px;
-        margin: 0;
+        margin: 2px 2px;
         font-size: small;
         font-weight: bold;
         background-color: #FF7F50;
         color: white;
         border-radius: 4px;
         transition: background-color 0.3s ease;
-        text-decoration: none;
     }
     .tag-link:hover {
         background-color: #008080;
         color: white;
     }
-</style>
+    </style> <!-- intentional indentation -->
