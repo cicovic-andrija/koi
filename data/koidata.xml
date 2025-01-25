@@ -10,14 +10,15 @@
 <metadata key="games/platform" default="N/A" />
 </koitypes>
 <collections hidden="dajana">
-<collection key="books" name="Book Library" />
+<collection key="books" name="My Book Library" />
 <collection key="textbooks" name="Textbooks" />
+<collection key="marinebooks" name="Diving and Ichthyology Books" />
 <collection key="murakami" name="Haruki Murakami's Books" />
 <collection key="tolkien" name="Tolkien's Legendarium" />
 <collection key="discworld" name="Discworld Books" />
 <collection key="dajana" name="Dajana's Books" />
-<collection key="boardgames" name="Board Game Library" />
-<collection key="videogames" name="Video Game Library" />
+<collection key="boardgames" name="My Board Game Library" />
+<collection key="videogames" name="My Video Game Library" />
 <collection key="swcards" name="Switch Cards" />
 <collection key="pscds" name="PlayStation CDs" />
 <collection key="diving" name="SCUBA Diving Equipment" />
@@ -27,9 +28,30 @@
 <book title="Hear the Wind Sing" author="Haruki Murakami" completed="Yes" dateCompleted="03.01.2025." collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
 <book title="Pinball, 1973" author="Haruki Murakami" completed="Yes" dateCompleted="17.01.2025." collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
 <book title="A Wild Sheep Chase" author="Haruki Murakami" completed="Yes" dateCompleted="29.07.2024." sortBy="Wild Sheep Chase" collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
-<book title="Dance Dance Dance" author="Haruki Murakami" completed="Yes" dateCompleted="20.06.2024." sortBy="Wild Sheep Chase" collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
-<book title="Windows Internals (7th Edition)" author="Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon" collections="textbooks" tags="ebook,kindle" />
+<book title="Dance Dance Dance" author="Haruki Murakami" completed="Yes" dateCompleted="20.06.2024." collections="books,murakami" tags="novel,ebook,kindle,translation,japan" />
+<book title="Windows Internals" author="Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon" edition="7th Edition" collections="textbooks" tags="ebook,kindle" />
 <book title="Antifragile" author="Nassim Taleb" collections="books" tags="ebook,kindle" />
+<book title="The Last Dive" author="Bernie Chowdhury" sortBy="Last Dive" collections="books,marinebooks" tags="ebook,kindle,diving" />
+<book title="Diver Down" author="Michael R. Ange" collections="books,marinebooks" tags="ebook,kindle,diving" />
+<book title="Rendezvous with Rama" author="Arthur C. Clarke" completed="Yes" collections="books" tags="ebook,kindle,scifi" />
+<book title="The Shadow of the Torturer" author="Gene Wolfe" completed="Yes" sortBy="New Sun #1" collections="books" tags="ebook,kindle,scifi" />
+<book title="The Claw of the Conciliator" author="Gene Wolfe" completed="Yes" sortBy="New Sun #2" collections="books" tags="ebook,kindle,scifi" />
+<book title="The Sword of the Lictor" author="Gene Wolfe" sortBy="New Sun #3" collections="books" tags="ebook,kindle,scifi" />
+<book title="The Citadel of the Autarch" author="Gene Wolfe" sortBy="New Sun #4" collections="books" tags="ebook,kindle,scifi" />
+<book title="The Urth of the New Sun" author="Gene Wolfe" sortBy="New Sun #5" collections="books" tags="ebook,kindle,scifi" />
+<book title="The Once and Future King" author="T. H. White" sortBy="Once and Future King" collections="books" tags="ebook,kindle" />
+<book title="Martin Eden" author="Jack London" collections="books" tags="ebook,kindle" />
+<book title="Computer Architecture: A Quantitative Approach" author="John L. Hennessy, David A. Patterson" collections="textbooks" tags="ebook,pdf" />
+<book title="Computer Organization and Design: The Hardware/Software Interface" author="John L. Hennessy, David A. Patterson" collections="textbooks" tags="ebook,pdf" />
+<book title="Effective C++" author="Scott Meyers" edition="Third Edition" collections="textbooks" tags="ebook,pdf" />
+<book title="Effective Modern C++" author="Scott Meyers" completed="Yes" collections="textbooks" tags="ebook,pdf" />
+<book title="Expert C Programming" author="Peter van der Linden" completed="Yes" collections="textbooks" tags="ebook,pdf" />
+<book title="Introduction to Algorithms" author="Thomas H. Cormen" collections="textbooks" tags="ebook,pdf" />
+<book title="Operating System Concepts" author="Abraham Silberschatz, Peter Baer Galvin, Greg Gagne" collections="textbooks" tags="ebook,pdf" />
+<book title="Pro Git" author="Scott Chacon, Ben Straub" completed="Yes" edition="Second Edition" collections="textbooks" tags="ebook,pdf" />
+<book title="The Annotated Turing" author="Charles Petzold" sortBy="Annotated Turing" collections="textbooks" tags="ebook,pdf" />
+<book title="The Linux Command Line" author="William Shotts" completed="Yes" edition="Fifth Internet Edition" sortBy="Linux Command Line" collections="textbooks" tags="ebook,pdf" />
+<book title="The C Programming Language" author="Brian W. Kernighan, Dennis M. Ritchie" completed="Yes" edition="Second Edition: ANSI C" sortBy="C Programming Language" collections="textbooks" tags="ebook,pdf" />
 </books>
 <games>
 <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
@@ -69,7 +91,7 @@
 <game title="Prince of Persia: The Sands of Time" platform="Windows" studio="Ubisoft Montreal" rating="4/5" collections="videogames" tags="digital" />
 </games>
 <equipment>
-<item label="Smart Air Dive Computer" category="SCUBA Diving" description="Dive computer" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="scuba" />
+<item label="Smart Air Dive Computer" category="SCUBA Diving" description="Dive computer" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="diving" />
 </equipment>
 </data>
 </koidatabase>
