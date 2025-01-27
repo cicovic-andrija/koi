@@ -32,6 +32,7 @@
 <book title="Windows Internals" author="Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon" edition="7th Edition" collections="textbooks" tags="ebook,kindle" />
 <book title="Antifragile" author="Nassim Taleb" collections="books" tags="ebook,kindle" />
 <book title="The Last Dive" author="Bernie Chowdhury" sortBy="Last Dive" collections="books,marinebooks" tags="ebook,kindle,diving" />
+<book title="Shadow Divers" author="" collections="books,marinebooks" tags="ebook,mobi,diving,incomplete" />
 <book title="Diver Down" author="Michael R. Ange" collections="books,marinebooks" tags="ebook,kindle,diving" />
 <book title="Rendezvous with Rama" author="Arthur C. Clarke" completed="Yes" collections="books" tags="ebook,kindle,scifi" />
 <book title="The Shadow of the Torturer" author="Gene Wolfe" completed="Yes" sortBy="New Sun #1" collections="books" tags="ebook,kindle,scifi" />
@@ -52,6 +53,12 @@
 <book title="The Annotated Turing" author="Charles Petzold" sortBy="Annotated Turing" collections="textbooks" tags="ebook,pdf" />
 <book title="The Linux Command Line" author="William Shotts" completed="Yes" edition="Fifth Internet Edition" sortBy="Linux Command Line" collections="textbooks" tags="ebook,pdf" />
 <book title="The C Programming Language" author="Brian W. Kernighan, Dennis M. Ritchie" completed="Yes" edition="Second Edition: ANSI C" sortBy="C Programming Language" collections="textbooks" tags="ebook,pdf" />
+<book title="Ronjenje u sigurnosti" author="Stracimir Gošović" lang="Serbo-Croatian" collections="books,marinebooks,textbooks" tags="diving" />
+<book title="Diving the Thistlegorm" author="Simon Brown, Jon Henderon, Alex Mustard, Mike Postons" collections="books,marinebooks" tags="diving" />
+<book title="100 Dives of a Lifetime" author="Carrie Miller" collections="books,marinebooks" tags="diving" />
+<book title="Fishes and Other Marine Animals of the Maltese Islands" author="Mark-Anthony Falzon, Patrick J. Schembri" collections="books,marinebooks" tags="ichthyology" />
+<book title="Hawaii Fishes" author="John P. Hoover" collections="books,marinebooks" tags="ichthyology" />
+<book title="Kad padne noć" author="Haruki Murakami" lang="Serbian" edition="Geopoetika" completed="Yes" collections="books,murakami" tags="translation,japan,borrowed" />
 </books>
 <games>
 <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
