@@ -58,7 +58,8 @@
 <book title="100 Dives of a Lifetime" author="Carrie Miller" collections="books,marinebooks" tags="diving" />
 <book title="Fishes and Other Marine Animals of the Maltese Islands" author="Mark-Anthony Falzon, Patrick J. Schembri" collections="books,marinebooks" tags="ichthyology" />
 <book title="Hawaii Fishes" author="John P. Hoover" collections="books,marinebooks" tags="ichthyology" />
-<book title="Kad padne noć" author="Haruki Murakami" lang="Serbian" edition="Geopoetika" completed="Yes" collections="books,murakami" tags="translation,japan,borrowed" />
+<book title="Kad padne noć" author="Haruki Murakami" lang="Serbian" edition="Geopoetika" completed="Yes" collections="books,murakami" tags="translation,japan,lended" />
+<book title="How to Lie with Statistics" author="Darrell Huff" collections="books" />
 </books>
 <games>
 <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />

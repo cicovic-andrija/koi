@@ -136,7 +136,7 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 func renderNotFound(w http.ResponseWriter, content string) {
 	renderTemplate(w, Page{
 		Key:        "not-found",
-		Title:      "Not found",
+		Title:      "Not Found",
 		Supertitle: "404",
 		Data:       content,
 	})
