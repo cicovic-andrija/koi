@@ -6,7 +6,7 @@
 <metadata key="games/forTwo" default="No" />
 <metadata key="games/star" default="No" />
 <metadata key="games/rating" default="?/5" />
-<metadata key="games/studio" default="N/A" />
+<metadata key="games/developer" default="N/A" />
 <metadata key="games/platform" default="N/A" />
 </koitypes>
 <collections hidden="dajana">
@@ -58,48 +58,49 @@
 <book title="100 Dives of a Lifetime" author="Carrie Miller" collections="books,marinebooks" tags="diving" />
 <book title="Fishes and Other Marine Animals of the Maltese Islands" author="Mark-Anthony Falzon, Patrick J. Schembri" collections="books,marinebooks" tags="ichthyology" />
 <book title="Hawaii Fishes" author="John P. Hoover" collections="books,marinebooks" tags="ichthyology" />
-<book title="Kad padne noć" author="Haruki Murakami" lang="Serbian" edition="Geopoetika" completed="Yes" collections="books,murakami" tags="translation,japan,lended" />
+<book title="Kad padne noć" author="Haruki Murakami" lang="Serbian" edition="Geopoetika" completed="Yes" collections="books,murakami" tags="translation,japan,lent" />
 <book title="How to Lie with Statistics" author="Darrell Huff" collections="books" />
 </books>
 <games>
 <game title="Age of War" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="3/5" collections="boardgames" tags="japan" />
 <game title="Catan" platform="Board game" completed="N/A" rating="3/5" collections="boardgames" tags="translation" />
-<game title="Dune (2019)" platform="Board game" star="Yes" completed="N/A" rating="5/5" collections="boardgames" tags="scifi,remaster" />
+<game title="Dune (2019)" platform="Board game" star="Yes" completed="N/A" rating="5/5" collections="boardgames" tags="scifi,strategy,remaster" />
 <game title="Exploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,translation" />
 <game title="Streaking Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,expansion" />
 <game title="Imploding Kittens" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,expansion" />
 <game title="Jaipur" platform="Board game" completed="N/A" forTwo="Yes" rating="3/5" collections="boardgames" />
 <game title="Omerta" platform="Board game" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,translation" />
-<game title="Pax Pamir (2nd Edition)" platform="Board game" completed="N/A" forTwo="Yes" start="Yes" rating="5/5" collections="boardgames" />
-<game title="Terraforming Mars: Ares Expedition" platform="Board game" completed="N/A" forTwo="Yes" rating="5/5" collections="boardgames" tags="scifi,translation,cooperative" />
+<game title="Pax Pamir (2nd Edition)" platform="Board game" developer="Cole Wehrle" completed="N/A" forTwo="Yes" star="Yes" rating="5/5" collections="boardgames" tags="strategy,tableau,remaster" />
+<game title="Terraforming Mars: Ares Expedition" platform="Board game" completed="N/A" forTwo="Yes" rating="5/5" collections="boardgames" tags="scifi,translation,cooperative,tableau,engine" />
 <game title="Ticket to Ride: Nordic Countries" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" />
-<game title="Wingspan" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames,translation" />
-<game title="7 Wonders: Duel" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" />
+<game title="Wingspan" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames,translation,engine" />
+<game title="7 Wonders: Duel" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames,engine" />
 <game title="7 Wonders: Pantheon" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames" tags="expansion" />
 <game title="White Castle" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="4/5" collections="boardgames" tags="japan,translation" />
-<game title="Everdell" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames,translation" />
+<game title="Everdell" platform="Board game" completed="N/A" forTwo="Yes" rating="4/5" collections="boardgames,translation,tableau" />
 <game title="Mind the Gap" platform="Board game" completed="N/A" forTwo="Yes" star="Yes" rating="2/5" collections="boardgames" tags="cardonly" />
 <game title="Sea Salt and Paper" platform="Board game" forTwo="Yes" star="Yes" completed="N/A" rating="5/5" collections="boardgames" tags="cardonly,translation" />
-<game title="Xenoblade Chronicles: Definitive Edition" series="Xenoblade#1" platform="Switch" studio="Monolith Soft" star="Yes" rating="5/5" collections="videogames,swcards" tags="physical,scifi,remaster,dlc,openworld" />
-<game title="Xenoblade Chronicles 2" series="Xenoblade#2" platform="Switch" studio="Monolith Soft" star="Yes" rating="5/5" collections="videogames,swcards" tags="physical,digital,scifi,openworld" />
-<game title="Xenoblade Chronicles 2: Torna - The Golden Country" series="Xenoblade#3" platform="Switch" studio="Monolith Soft" star="Yes" completed="No" rating="5/5" collections="videogames,swcards" tags="physical,digital,scifi,dlc,openworld" />
-<game title="Xenoblade Chronicles 3" series="Xenoblade#4" platform="Switch" studio="Monolith Soft" star="Yes" completed="No" rating="?/5" collections="videogames,swcards" tags="physical,scifi,openworld" />
-<game title="The Legend of Zelda: Breath of the Wild" series="LegendOfZelda#1" platform="Switch" studio="Nintendo" star="Yes" completed="Yes" rating="5/5" collections="videogames,swcards" tags="physical,openworld" />
-<game title="The Legend of Zelda: Tears of the Kingdom" series="LegendOfZelda#2" platform="Switch" studio="Nintendo" completed="No" rating="4/5" collections="videogames,swcards" tags="physical,openworld" />
-<game title="Hyrule Warriors: Age of Calamity" series="LegendOfZelda#3" platform="Switch" studio="Omega Force" forTwo="Yes" star="Yes" rating="3/5" completed="No" collections="videogames,swcards" tags="physical,scifi,cooperative" />
-<game title="Mario Kart 8 Deluxe" platform="Switch" studio="Nintendo" forTwo="Yes" star="Yes" completed="No" rating="4/5" collections="videogames,swcards" tags="physical" />
-<game title="Persona 5 Royal" platform="Switch" studio="Atlus" completed="No" rating="?/5" collections="videogames,swcards" tags="physical" />
-<game title="God of War (2018)" platform="PS4" studio="Santa Monica Studio" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,openworld" />
-<game title="NieR: Automata" platform="PS4" studio="Square Enix" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,openworld" />
-<game title="Dead Space" platform="PS5" studio="Motive" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,remaster" />
-<game title="Ghost of Tsushima - Director's Cut" platform="PS5" studio="Sucker Punch" rating="5/5" collections="videogames,pscds" tags="physical,openworld,japan,dlc" />
-<game title="It Takes Two" platform="Switch" studio="Hazelight Studios" forTwo="Yes" rating="5/5" collections="videogames" tags="digital,cooperative" />
-<game title="Dave the Diver" platform="Switch" studio="Mintrocket" completed="No" rating="3/5" collections="videogames" tags="digital" />
-<game title="Return of the Obra Dinn" platform="Windows" studio="Lucas Pope" rating="5/5" collections="videogames" tags="digital" />
-<game title="Prince of Persia: The Sands of Time" platform="Windows" studio="Ubisoft Montreal" rating="4/5" collections="videogames" tags="digital" />
+<game title="Xenoblade Chronicles: Definitive Edition" series="Xenoblade#1" category="JRPG" platform="Switch" developer="Monolith Soft" star="Yes" rating="5/5" collections="videogames,swcards" tags="physical,scifi,remaster,dlc,openworld" />
+<game title="Xenoblade Chronicles 2" series="Xenoblade#2" category="JRPG" platform="Switch" developer="Monolith Soft" star="Yes" rating="5/5" collections="videogames,swcards" tags="physical,digital,scifi,openworld" />
+<game title="Xenoblade Chronicles 2: Torna - The Golden Country" series="Xenoblade#3" category="JRPG" platform="Switch" developer="Monolith Soft" star="Yes" rating="5/5" collections="videogames,swcards" tags="physical,digital,scifi,dlc,openworld" />
+<game title="Xenoblade Chronicles 3" series="Xenoblade#4" category="JRPG" platform="Switch" developer="Monolith Soft" star="Yes" completed="No" rating="?/5" collections="videogames,swcards" tags="physical,scifi,openworld" />
+<game title="The Legend of Zelda: Breath of the Wild" series="LegendOfZelda#1" category="Action/adventure" platform="Switch" developer="Nintendo" star="Yes" completed="Yes" rating="5/5" collections="videogames,swcards" tags="physical,openworld" />
+<game title="The Legend of Zelda: Tears of the Kingdom" series="LegendOfZelda#2" category="Action/adventure" platform="Switch" developer="Nintendo" completed="No" rating="4/5" collections="videogames,swcards" tags="physical,openworld" />
+<game title="Hyrule Warriors: Age of Calamity" series="LegendOfZelda#3" category="HnS" platform="Switch" developer="Omega Force" forTwo="Yes" star="Yes" rating="3/5" completed="No" collections="videogames,swcards" tags="physical,scifi,cooperative" />
+<game title="Mario Kart 8 Deluxe" platform="Switch" category="Racing" developer="Nintendo" forTwo="Yes" star="Yes" completed="No" rating="4/5" collections="videogames,swcards" tags="physical" />
+<game title="Persona 5 Royal" platform="Switch" category="JRPG" developer="Atlus" completed="No" rating="?/5" collections="videogames,swcards" tags="physical" />
+<game title="God of War (2018)" platform="PS4" category="Action/adventure" developer="Santa Monica Studio" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,openworld" />
+<game title="NieR: Automata" platform="PS4" category="JRPG" developer="Square Enix" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,openworld" />
+<game title="Dead Space" platform="PS5" category="Survival" developer="Motive" completed="No" rating="?/5" collections="videogames,pscds" tags="physical,remaster" />
+<game title="Ghost of Tsushima - Director's Cut" platform="PS5" category="Action/adventure" developer="Sucker Punch" rating="5/5" collections="videogames,pscds" tags="physical,openworld,japan,dlc" />
+<game title="It Takes Two" platform="Switch" category="Action/adventure" developer="Hazelight Studios" forTwo="Yes" rating="5/5" collections="videogames" tags="digital,cooperative" />
+<game title="Dave the Diver" platform="Switch" developer="Mintrocket" completed="No" rating="3/5" collections="videogames" tags="digital" />
+<game title="Return of the Obra Dinn" platform="Windows" category="Puzzle" developer="Lucas Pope" rating="5/5" collections="videogames" tags="digital" />
+<game title="Prince of Persia: The Sands of Time" platform="Windows" category="Action/adventure" developer="Ubisoft Montreal" rating="4/5" collections="videogames" tags="digital" />
 </games>
 <equipment>
-<item label="Smart Air Dive Computer" category="SCUBA Diving" description="Dive computer" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="diving" />
+<item label="Smart Air Dive Computer" category="SCUBA Diving" description="Dive computer with air integration, apnea, Nitrox and multi-gas support" dateAcquired="2023" manufacturer="Mares" collections="diving" tags="diving" />
+<item label="Bolt SLS BCD" category="SCUBA Diving" description="Back-inflate BCD with integrated weight pockets (SLS)" dateAcquired="2024" manufacturer="Mares" collections="diving" tags="diving" />
 </equipment>
 </data>
 </koidatabase>

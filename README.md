@@ -17,7 +17,8 @@ go build -o koipond main.go
 ```bash
 KOIPOND_MODE=dev go run main.go
 ```
-> TCP port in dev mode is 8072.
+
+> TCP port in dev mode is hard-coded to 8072.
 
 ### Run in production
 
