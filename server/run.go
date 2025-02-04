@@ -29,14 +29,18 @@ func readEnvironment() {
 
 	if mode == "dev" {
 		_serverControl.endpoint = "localhost:8072"
-	} else if mode == "prod" {
+	} else if mode == "prod" || mode == "prod-local-listener" {
 		port := os.Getenv(portEnvVar)
 		trace(_env, "%s = %q", portEnvVar, port)
 		if num, err := strconv.Atoi(port); err != nil || num < 1 || num > 65535 {
 			trace(_error, "value of %s is invalid or is not a valid TCP port number", portEnvVar)
 			os.Exit(1)
 		}
-		_serverControl.endpoint = "127.0.0.1:" + port
+		if mode == "prod-local-listener" {
+			_serverControl.endpoint = "127.0.0.1:" + port
+		} else {
+			_serverControl.endpoint = "0.0.0.0:" + port
+		}
 	} else {
 		trace(_error, "value of %s is invalid", modeEnvVar)
 		os.Exit(1)
