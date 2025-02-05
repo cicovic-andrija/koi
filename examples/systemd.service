@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 Restart=always
-Environment="DIVELOG_MODE=prod"
+Environment="DIVELOG_MODE=prod-local-listener"
 Environment="DIVELOG_PORT=52000"
 User=uname
 WorkingDirectory=/srv

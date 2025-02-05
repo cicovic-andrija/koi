@@ -1,5 +1,12 @@
 # Koipond
 
+## Contents
+
+- Concepts
+- Customization
+- Development Instructions
+- Deployment Instructions
+
 ## Concepts
 
 TODO
@@ -13,6 +20,8 @@ go build -o koipond main.go
 ```
 
 ### Run locally (development mode)
+
+TODO: Mention store/
 
 ```bash
 KOIPOND_MODE=dev go run main.go
@@ -34,8 +43,17 @@ KOIPOND_MODE=prod-local-listener KOIPOND_PORT=52000 ./koipond
 
 ### Run in production (Docker)
 
+TODO: Mention store/
+
 ```bash
-docker run --name koipond-server --publish 127.0.0.1:8072:8072 --env 'KOIPOND_PORT=8072' --detach acicovic/koipond:latest
+docker run \
+    --name koipond-server \
+    --publish 127.0.0.1:8072:8072 \
+    --env 'KOIPOND_PORT=8072' \
+    --volume $HOME/store:/srv/store \
+    --restart on-failure:10 \
+    --detach \
+    acicovic/koipond:latest
 ```
 
 ### Kill
@@ -45,3 +63,15 @@ pkill -SIGINT koipond
 ```
 
 > Or, CTRL-C if running in foreground.
+
+or
+
+```bash
+docker kill -s SIGINT koipond-server
+```
+
+### Build Docker image
+
+```bash
+docker build -t acicovic/koipond:latest .
+```

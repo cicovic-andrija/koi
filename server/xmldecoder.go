@@ -89,7 +89,7 @@ func DecodeDatabase(r io.Reader) error {
 				return fmt.Errorf("failed to decode <%s>: invalid attribute format", XMLNODE_METADATA)
 			}
 			_database.defaults[metadata.Key] = metadata.DefaultValue
-			trace(_decoder, "predefined default [%s]->%s", metadata.Key, metadata.DefaultValue)
+			trace(_decoder, "predefined default %s:%q", metadata.Key, metadata.DefaultValue)
 		} else {
 			// </koitypes>
 			trace(_decoder, "XML node <%s> decoding completed", XMLNODE_KOITYPES)
@@ -132,7 +132,7 @@ func DecodeDatabase(r io.Reader) error {
 				return fmt.Errorf("failed to decode <%s>: invalid attribute format", XMLNODE_COLLECTION)
 			}
 			_database.declaredCollections[collection.Key] = collection.Name
-			trace(_decoder, "declared collection [%s]->%q", collection.Key, collection.Name)
+			trace(_decoder, "declared collection %s:%q", collection.Key, collection.Name)
 		} else {
 			// </collections>
 			trace(_decoder, "XML node <%s> decoding completed", XMLNODE_COLLECTIONS)
