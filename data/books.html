@@ -17,7 +17,7 @@
     </tr>
     <tr>
         <td><b>Completed</b></td>
-        <td>{{ .Metadata.completed }}</td>
+        <td>{{ if .Metadata.dateCompleted }}Yes{{ else }}{{ .Metadata.completed }}{{ end }}</td>
     </tr>
     <tr>
         <td><b>Completed (date)</b></td>

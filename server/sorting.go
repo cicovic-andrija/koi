@@ -36,30 +36,30 @@ func label(i *Item, j *Item) bool {
 }
 
 func sortHintOrTitle(i *Item, j *Item) bool {
-	const titleKey = "title"
-	a := i.Metadata[MDSortingHintKey]
+	const MKEY_TITLE = "title"
+	a := i.Metadata[MKEY_SORTING_HINT]
 	if a == "" {
-		a = i.Metadata[titleKey]
+		a = i.Metadata[MKEY_TITLE]
 	}
-	b := j.Metadata[MDSortingHintKey]
+	b := j.Metadata[MKEY_SORTING_HINT]
 	if b == "" {
-		b = j.Metadata[titleKey]
+		b = j.Metadata[MKEY_TITLE]
 	}
 	return a < b
 }
 
 func groupedUnderSeries(i *Item, j *Item) bool {
 	const (
-		titleKey  = "title"
-		seriesKey = "series"
+		MKEY_TITLE  = "title"
+		MKEY_SERIES = "series"
 	)
-	a := i.Metadata[seriesKey]
+	a := i.Metadata[MKEY_SERIES]
 	if a == "" {
-		a = i.Metadata[titleKey]
+		a = i.Metadata[MKEY_TITLE]
 	}
-	b := j.Metadata[seriesKey]
+	b := j.Metadata[MKEY_SERIES]
 	if b == "" {
-		b = j.Metadata[titleKey]
+		b = j.Metadata[MKEY_TITLE]
 	}
 	return a < b
 }

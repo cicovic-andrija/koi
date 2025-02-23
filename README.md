@@ -47,7 +47,7 @@ TODO: Mention store/
 
 ```bash
 docker run \
-    --name koipond-server \
+    --name inventory-server \
     --publish 127.0.0.1:8072:8072 \
     --env 'KOIPOND_PORT=8072' \
     --volume $HOME/store:/srv/store \
@@ -75,3 +75,5 @@ docker kill -s SIGINT koipond-server
 ```bash
 docker build -t acicovic/koipond:latest .
 ```
+
+> Substitute image name.

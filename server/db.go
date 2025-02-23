@@ -1,6 +1,7 @@
 package server
 
 import (
+	"sort"
 	"strings"
 	"time"
 
@@ -9,10 +10,10 @@ import (
 
 // Special metadata keys.
 const (
-	MDLabelKey       = "label"
-	MDCollectionsKey = "collections"
-	MDTagsKey        = "tags"
-	MDSortingHintKey = "sortBy"
+	MKEY_LABEL        = "label"
+	MKEY_COLLECTIONS  = "collections"
+	MKEY_TAGS         = "tags"
+	MKEY_SORTING_HINT = "sortBy"
 )
 
 // Item is a generic object stored in the database identified by
@@ -78,6 +79,7 @@ func (db *Database) add(typeKey string, metadata map[string]string) *Item {
 		Type:     typeKey,
 		Metadata: metadata,
 	}
+	metadata = nil
 
 	if ok := item.setLabel(); !ok {
 		return nil
@@ -93,31 +95,40 @@ func (db *Database) add(typeKey string, metadata map[string]string) *Item {
 		}
 	}
 
-	// item is valid at this point, anything optional goes below
-	db.items = append(db.items, item)
-
-	// index collection (invalid collection names are ignored)
-	if collections := metadata[MDCollectionsKey]; collections != "" {
-		itemsCollections := []string{}
+	// index collection (invalid and hidden collections are cleaned out)
+	if collections := item.Metadata[MKEY_COLLECTIONS]; collections != "" {
+		validCollections := []string{}
 		for _, collectionKey := range strings.Split(collections, ",") {
 			collectionKey = strings.TrimSpace(collectionKey)
 			if isValidCollectionKey(collectionKey) {
 				_, declared := db.declaredCollections[collectionKey]
 				if declared && !db.hiddenCollections.Contains(collectionKey) {
-					itemsCollections = append(itemsCollections, collectionKey)
+					validCollections = append(validCollections, collectionKey)
 				}
 			}
 		}
-		for _, c := range itemsCollections {
+		for _, c := range validCollections {
 			db.collectioned[c] = append(db.collectioned[c], item)
 		}
+		item.Metadata[MKEY_COLLECTIONS] = strings.Join(validCollections, ",")
 	}
 
-	// index tags (invalid tag names are ignored)
-	for _, tag := range item.Tags() {
-		db.tagged[tag] = append(db.tagged[tag], item)
+	// index tags (invalid tags are cleaned out)
+	if tags := item.Metadata[MKEY_TAGS]; tags != "" {
+		validTags := []string{}
+		for _, tag := range strings.Split(tags, ",") {
+			tag = strings.TrimSpace(tag)
+			if isValidTag(tag) {
+				validTags = append(validTags, tag)
+			}
+		}
+		for _, tag := range validTags {
+			db.tagged[tag] = append(db.tagged[tag], item)
+		}
+		item.Metadata[MKEY_TAGS] = strings.Join(validTags, ",")
 	}
 
+	db.items = append(db.items, item)
 	return item
 }
 
@@ -159,32 +170,32 @@ func (db *Database) catalogueOfTaggedItems(tag string) *Catalogue {
 
 // Tags returns a slice of item's tags.
 func (i *Item) Tags() (tags []string) {
-	for _, tag := range strings.Split(i.Metadata[MDTagsKey], ",") {
-		tag = strings.TrimSpace(tag)
-		if isValidTag(tag) {
-			tags = append(tags, tag)
-		}
+	if i.Metadata[MKEY_TAGS] != "" {
+		tags = strings.Split(i.Metadata[MKEY_TAGS], ",")
+		sort.Strings(tags)
 	}
 	return
 }
 
 func (i *Item) setLabel() (ok bool) {
-	i.Label = i.Metadata[MetadataKeyForItemLabel(i.Type)]
+	i.Label = i.Metadata[ItemLabelKey(i.Type)]
 	ok = i.Label != ""
 	return
 }
 
 // Tags returns a slice of tags found in the catalogue.
-func (c *Catalogue) Tags() []string {
-	tags := set.NewStringSet()
+func (c *Catalogue) Tags() (tags []string) {
+	tagset := set.NewStringSet()
 	for _, group := range c.Groups {
 		for _, item := range group {
 			for _, tag := range item.Tags() {
-				tags.Insert(tag)
+				tagset.Insert(tag)
 			}
 		}
 	}
-	return tags.ToSlice()
+	tags = tagset.ToSlice()
+	sort.Strings(tags)
+	return
 }
 
 // HasMultipleGroups reports whether a Catalogue has more than one group.
@@ -241,14 +252,14 @@ func Sort(items []*Item) {
 	}
 }
 
-func MetadataKeyForItemLabel(typeKey string) string {
+func ItemLabelKey(typeKey string) string {
 	switch typeKey {
 	case "books":
 		return "title"
 	case "games":
 		return "title"
 	default:
-		return MDLabelKey
+		return MKEY_LABEL
 	}
 }
 

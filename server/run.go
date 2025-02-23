@@ -17,12 +17,12 @@ func Run() {
 
 func readEnvironment() {
 	const (
-		modeEnvVar = "KOIPOND_MODE"
-		portEnvVar = "KOIPOND_PORT"
+		ENVV_MODE = "KOIPOND_MODE"
+		ENVV_PORT = "KOIPOND_PORT"
 	)
 
-	mode := os.Getenv(modeEnvVar)
-	trace(_env, "%s = %q", modeEnvVar, mode)
+	mode := os.Getenv(ENVV_MODE)
+	trace(_env, "%s = %q", ENVV_MODE, mode)
 	if mode == "" {
 		mode = "prod"
 	}
@@ -30,10 +30,10 @@ func readEnvironment() {
 	if mode == "dev" {
 		_serverControl.endpoint = "localhost:8072"
 	} else if mode == "prod" || mode == "prod-local-listener" {
-		port := os.Getenv(portEnvVar)
-		trace(_env, "%s = %q", portEnvVar, port)
+		port := os.Getenv(ENVV_PORT)
+		trace(_env, "%s = %q", ENVV_PORT, port)
 		if num, err := strconv.Atoi(port); err != nil || num < 1 || num > 65535 {
-			panic(fmt.Errorf("value of %s is invalid or is not a valid TCP port number", portEnvVar))
+			panic(fmt.Errorf("value of %s is invalid or is not a valid TCP port number", ENVV_PORT))
 		}
 		if mode == "prod-local-listener" {
 			_serverControl.endpoint = "127.0.0.1:" + port
@@ -41,7 +41,7 @@ func readEnvironment() {
 			_serverControl.endpoint = "0.0.0.0:" + port
 		}
 	} else {
-		panic(fmt.Errorf("value of %s is invalid", modeEnvVar))
+		panic(fmt.Errorf("value of %s is invalid", ENVV_MODE))
 	}
 	trace(_control, "main: in mode %q (HTTP): endpoint will be http://%s", mode, _serverControl.endpoint)
 
