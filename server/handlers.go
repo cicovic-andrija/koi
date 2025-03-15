@@ -1,113 +1,32 @@
 package server
 
 import (
-	"html/template"
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 )
 
-func multiplexer() http.Handler {
+func multiHandler() http.Handler {
+	// multiplexing handler
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /collections", renderCollections) // /collections/{$}: 404
-	trace(_https, "handler registered for GET /collections")
+	register := func(p string, h func(http.ResponseWriter, *http.Request)) {
+		mux.HandleFunc(p, h)
+		trace(_https, "handler registered for pattern %s", p)
+	}
 
-	mux.HandleFunc("GET /collections/{key}", renderCollection)
-	trace(_https, "handler registered for GET /collections/{key}")
-
-	mux.HandleFunc("GET /tags", renderTags) // /tags/{$}: 404
-	trace(_https, "handler registered for GET /tags")
-
-	mux.HandleFunc("GET /tags/{tag}", renderTag)
-	trace(_https, "handler registered for GET /tags/{tag}")
-
-	mux.HandleFunc("GET /items", renderItems) // /items/{$}: 404
-	trace(_https, "handler registered for GET /items")
-
-	mux.HandleFunc("GET /items/{id}", renderItem)
-	trace(_https, "handler registered for GET /items/{id}")
-
-	mux.HandleFunc("GET /", defaultHandler)
-	trace(_https, "handler registered for GET /")
+	register("GET /collections", renderCollections)
+	register("GET /collections/{collection}", renderCollection)
+	// /collections/{$} -> 404
+	register("GET /tags", renderTags)
+	register("GET /tags/{tag}", renderTag)
+	// /tags/{$} -> 404
+	register("GET /items", renderItems)
+	register("GET /items/{id}", renderItem)
+	// /items/{$} 404
+	register("GET /", defaultHandler)
 
 	return mux
-}
-
-func renderCollections(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, Page{
-		Key:        "collections",
-		Title:      "Collections",
-		Supertitle: "All",
-		Data:       _database.collections(),
-	})
-}
-
-func renderCollection(w http.ResponseWriter, r *http.Request) {
-	key := r.PathValue("key")
-	catalogue := _database.collectionCatalogue(key)
-	if catalogue == nil {
-		renderNotFound(w, "Collection not found.")
-		return
-	}
-	renderTemplate(w, Page{
-		Key:         "catalogue",
-		Title:       _database.declaredCollections[key],
-		Supertitle:  "Collection",
-		DisplayTags: true,
-		Data:        catalogue,
-	})
-}
-
-func renderTags(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, Page{
-		Key:        "tags",
-		Title:      "Tags",
-		Supertitle: "All",
-		Data:       _database.tags(),
-	})
-}
-
-func renderTag(w http.ResponseWriter, r *http.Request) {
-	tag := r.PathValue("tag")
-	catalogue := _database.catalogueOfTaggedItems(tag)
-	if catalogue == nil {
-		renderNotFound(w, "Tag not found.")
-		return
-	}
-	renderTemplate(w, Page{
-		Key:        "catalogue",
-		Title:      tag,
-		Supertitle: "Items tagged with",
-		Data:       catalogue,
-	})
-}
-
-func renderItems(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, Page{
-		Key:        "catalogue",
-		Title:      "Items",
-		Supertitle: "All",
-		Data:       _database.catalogueOfEverything(),
-	})
-}
-
-func renderItem(w http.ResponseWriter, r *http.Request) {
-	itemID, err := strconv.Atoi(r.PathValue("id"))
-	if err != nil || itemID < 0 || itemID > _database.lastID() {
-		renderNotFound(w, "Item not found.")
-		return
-	}
-
-	item := _database.singleItem(itemID)
-	renderTemplate(w, Page{
-		Key:         item.Type + "/item",
-		Title:       item.Label,
-		Supertitle:  TypeLabel(item.Type),
-		DisplayTags: true,
-		Data:        item,
-	})
 }
 
 func defaultHandler(w http.ResponseWriter, r *http.Request) {
@@ -133,47 +52,107 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func renderNotFound(w http.ResponseWriter, content string) {
-	renderTemplate(w, Page{
-		Key:        "not-found",
-		Title:      "Not Found",
-		Supertitle: "404",
-		Data:       content,
-	})
+func renderCollections(w http.ResponseWriter, r *http.Request) {
+	render(
+		w,
+		HTMLPage{
+			Key:        "@collections",
+			Supertitle: "All",
+			Title:      "Collections",
+			Data:       NewCollectionMap(_database.collections()),
+		},
+	)
 }
 
-func renderTemplate(w http.ResponseWriter, p Page) {
-	err := _pageTemplate.ExecuteTemplate(w, "main.html", p)
-	if err != nil {
-		trace(_error, "http: render template: %v", err)
+func renderCollection(w http.ResponseWriter, r *http.Request) {
+	collectionKey := r.PathValue("collection")
+	catalogue := _database.catalogueForCollection(collectionKey)
+	if catalogue == nil {
+		renderNotFound(w, "Collection not found.")
+		return
 	}
+
+	render(
+		w,
+		HTMLPage{
+			Key:        "@catalogue",
+			Supertitle: "Collection",
+			Title:      _database.declaredCollections[collectionKey],
+			Data:       catalogue,
+		},
+	)
 }
 
-// Page is a data structure passed to the template rendering engine.
-type Page struct {
-	Key         string
-	Title       string
-	Supertitle  string
-	DisplayTags bool
-	Data        any
+func renderTags(w http.ResponseWriter, r *http.Request) {
+	render(
+		w,
+		HTMLPage{
+			Key:        "@tags",
+			Supertitle: "All",
+			Title:      "Tags",
+			Data:       NewTagMap(_database.tags()),
+		},
+	)
 }
 
-// Global variables related to rendering.
-var (
-	// <#hardcoded#>
-	_pageTemplate = template.Must(template.New("page").Funcs(template.FuncMap{
-		"ToUpper":        strings.ToUpper,
-		"RenderRepoLink": RenderRepoLink,
-	}).ParseFiles(
-		"data/main.html",
-		"data/style.html",
-		"data/books.html",
-		"data/games.html",
-	))
+func renderTag(w http.ResponseWriter, r *http.Request) {
+	tag := r.PathValue("tag")
+	catalogue := _database.catalogueOfTaggedItems(tag)
+	if catalogue == nil {
+		renderNotFound(w, "Tag not found.")
+		return
+	}
 
-	_renderRepoLink = true
-)
+	render(
+		w,
+		HTMLPage{
+			Key:        "@catalogue",
+			Supertitle: "Items tagged with",
+			Title:      tag,
+			Data:       catalogue.withHiddenTags(),
+		},
+	)
+}
 
-func RenderRepoLink() bool {
-	return _renderRepoLink
+func renderItems(w http.ResponseWriter, r *http.Request) {
+	render(
+		w,
+		HTMLPage{
+			Key:        "@catalogue",
+			Supertitle: "All",
+			Title:      "Items",
+			Data:       _database.catalogueOfEverything().withHiddenTags(),
+		},
+	)
+}
+
+func renderItem(w http.ResponseWriter, r *http.Request) {
+	itemID, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil || itemID < 0 || itemID > _database.lastID() {
+		renderNotFound(w, "Item not found.")
+		return
+	}
+
+	item := _database.singleItem(itemID)
+	render(
+		w,
+		HTMLPage{
+			Key:        "@" + item.Type + "/item",
+			Supertitle: TypeLabel(item.Type),
+			Title:      item.Label,
+			Data:       item,
+		},
+	)
+}
+
+func renderNotFound(w http.ResponseWriter, message string) {
+	render(
+		w,
+		HTMLPage{
+			Key:          "@not-found",
+			Supertitle:   "404",
+			Title:        "Not Found",
+			ErrorMessage: message,
+		},
+	)
 }

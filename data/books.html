@@ -1,26 +1,26 @@
 <table>
     <tr>
         <td><b>Title</b></td>
-        <td><i>{{ .Metadata.title }}</i></td>
+        <td><i>{{ .title }}</i></td>
     </tr>
     <tr>
         <td><b>Author</b></td>
-        <td>{{ .Metadata.author }}</td>
+        <td>{{ .author }}</td>
     </tr>
     <tr>
         <td><b>Language</b></td>
-        <td>{{ .Metadata.lang }}</td>
+        <td>{{ .lang }}</td>
     </tr>
     <tr>
         <td><b>Edition</b></td>
-        <td>{{ .Metadata.edition }}</td>
+        <td>{{ .edition }}</td>
     </tr>
     <tr>
         <td><b>Completed</b></td>
-        <td>{{ if .Metadata.dateCompleted }}Yes{{ else }}{{ .Metadata.completed }}{{ end }}</td>
+        <td>{{ if .dateCompleted }}Yes{{ else }}{{ .completed }}{{ end }}</td>
     </tr>
     <tr>
-        <td><b>Completed (date)</b></td>
-        <td>{{ .Metadata.dateCompleted }}</td>
+        <td><b>Date completed</b></td>
+        <td>{{ .dateCompleted }}</td>
     </tr>
 </table>

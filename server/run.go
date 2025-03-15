@@ -46,7 +46,7 @@ func readEnvironment() {
 	trace(_control, "main: in mode %q (HTTP): endpoint will be http://%s", mode, _serverControl.endpoint)
 
 	// always read koidata.xml from store/ relative to the working directory
-	// <#hardcoded#>
+	// @hardcoded
 	if abs, err := filepath.Abs("store/koidata.xml"); err != nil {
 		panic(fmt.Errorf("failed to compose full store path: %v", err))
 	} else {

@@ -1,7 +1,6 @@
 package server
 
 import (
-	"sort"
 	"strings"
 	"time"
 
@@ -10,34 +9,11 @@ import (
 
 // Special metadata keys.
 const (
-	MKEY_LABEL        = "label"
-	MKEY_COLLECTIONS  = "collections"
-	MKEY_TAGS         = "tags"
-	MKEY_SORTING_HINT = "sortBy"
+	MKEY_LABEL        string = "label"
+	MKEY_COLLECTIONS  string = "collections"
+	MKEY_TAGS         string = "tags"
+	MKEY_SORTING_HINT string = "sortBy"
 )
-
-// Item is a generic object stored in the database identified by
-// a unique ID, with a non-empty label attached to it, and a set
-// of key-value Metadata pairs.
-//
-// Item's Type is used to determine how various operations are
-// performed on items of the same type, as well as to group items
-// by type in catalogues. Generic types (any enabled type in the db
-// with a valid name) are handled the same, but there are hard-coded
-// specific behaviours for certain special types that change the way
-// some operations are performed depending on the type,
-// e.g. the Sort function.
-type Item struct {
-	ID       int               `json:"id"`
-	Type     string            `json:"type"`
-	Label    string            `json:"label"`
-	Metadata map[string]string `json:"metadata"`
-}
-
-// Catalogue is a collection of items grouped by type.
-type Catalogue struct {
-	Groups map[string][]*Item `json:"groups"`
-}
 
 // Database is an item store.
 //
@@ -157,68 +133,33 @@ func (db *Database) singleItem(id int) *Item {
 }
 
 func (db *Database) catalogueOfEverything() *Catalogue {
-	return MakeCatalogue(db.items)
+	return makeCatalogue(db.items)
 }
 
-func (db *Database) collectionCatalogue(key string) *Catalogue {
-	return MakeCatalogue(db.collectioned[key])
+func (db *Database) catalogueForCollection(key string) *Catalogue {
+	return makeCatalogue(db.collectioned[key])
 }
 
 func (db *Database) catalogueOfTaggedItems(tag string) *Catalogue {
-	return MakeCatalogue(db.tagged[tag])
+	return makeCatalogue(db.tagged[tag])
 }
 
-// Tags returns a slice of item's tags.
-func (i *Item) Tags() (tags []string) {
-	if i.Metadata[MKEY_TAGS] != "" {
-		tags = strings.Split(i.Metadata[MKEY_TAGS], ",")
-		sort.Strings(tags)
-	}
-	return
-}
-
-func (i *Item) setLabel() (ok bool) {
-	i.Label = i.Metadata[ItemLabelKey(i.Type)]
-	ok = i.Label != ""
-	return
-}
-
-// Tags returns a slice of tags found in the catalogue.
-func (c *Catalogue) Tags() (tags []string) {
-	tagset := set.NewStringSet()
-	for _, group := range c.Groups {
-		for _, item := range group {
-			for _, tag := range item.Tags() {
-				tagset.Insert(tag)
-			}
-		}
-	}
-	tags = tagset.ToSlice()
-	sort.Strings(tags)
-	return
-}
-
-// HasMultipleGroups reports whether a Catalogue has more than one group.
-func (c *Catalogue) HasMultipleGroups() bool {
-	return len(c.Groups) > 1
-}
-
-// MakeCatalogue creates a Catalogue from the passed slice of items.
-func MakeCatalogue(items []*Item) *Catalogue {
+func makeCatalogue(items []*Item) *Catalogue {
 	if len(items) == 0 {
 		return nil
 	}
 
-	catalogue := &Catalogue{Group(items)}
-	for _, group := range catalogue.Groups {
+	catalogue := &Catalogue{
+		groups: group(items),
+	}
+	for _, group := range catalogue.groups {
 		Sort(group)
 	}
+
 	return catalogue
 }
 
-// Group splits the passed slice into groups (new slices)
-// of items having the same Type.
-func Group(items []*Item) map[string][]*Item {
+func group(items []*Item) map[string][]*Item {
 	if len(items) == 0 {
 		return nil
 	}
@@ -230,83 +171,4 @@ func Group(items []*Item) map[string][]*Item {
 	}
 
 	return groups
-}
-
-// Sort sorts the passed slice of items as defined by item type.
-// The function assumes that all items are of the same type.
-// <#hardcoded#>
-func Sort(items []*Item) {
-	if len(items) == 0 {
-		return
-	}
-
-	switch items[0].Type {
-	case "books":
-		By(sortHintOrTitle).Sort(items)
-	case "games":
-		By(groupedUnderSeries).Sort(items)
-	case "equipment":
-		By(label).Sort(items)
-	default:
-		By(label).Sort(items)
-	}
-}
-
-func ItemLabelKey(typeKey string) string {
-	switch typeKey {
-	case "books":
-		return "title"
-	case "games":
-		return "title"
-	default:
-		return MKEY_LABEL
-	}
-}
-
-// TypeLabel returns the label to be used in rendering of an item's type.
-// <#hardcoded#>
-func TypeLabel(typeKey string) string {
-	switch typeKey {
-	case "books":
-		return "Book"
-	case "games":
-		return "Game"
-	case "equipment":
-		return "Equipment part"
-	default:
-		return "Inventory item"
-	}
-}
-
-// TypeGroupLabel returns the label to be used in rendering
-// of type name for a group of items.
-// <#hardcoded#>
-func GroupTypeLabel(typeKey string) string {
-	switch typeKey {
-	case "books":
-		return "Books"
-	case "games":
-		return "Games"
-	case "equipment":
-		return "Equipment items"
-	default:
-		return typeKey
-	}
-}
-
-// IsValidItemKeyWordForType checks if the key is a valid single
-// item keyword in the database (e.g. "book" for "books" type).
-// Keyword "item" is always valid for every type.
-// <#hardcoded#>
-func IsValidItemKeyWordForType(key string, typeKey string) bool {
-	if key == "item" {
-		return true
-	}
-	switch typeKey {
-	case "books":
-		return key == "book"
-	case "games":
-		return key == "game"
-	}
-	return false
 }

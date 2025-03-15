@@ -35,7 +35,7 @@ func (c *control) boot() {
 func (c *control) init() {
 	c.https = &http.Server{
 		Addr:     c.endpoint,
-		Handler:  multiplexer(),
+		Handler:  multiHandler(),
 		ErrorLog: log.New(io.Discard, "", 0),
 	}
 }
