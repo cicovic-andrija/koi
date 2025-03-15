@@ -31,7 +31,7 @@
 
 <!----> {{ if eq .Key "@collections" }}<div class="item-list">
         {{ range $key, $value := .Data.Ref }}
-        <a href="/collections/{{ $key }}">⋅ {{ $value }} ⋅</a>
+        <a href="/collections/{{ $key }}">{{ $value }}</a>
         {{ end }}</div>
 <!----> {{ else if eq .Key "@tags" }}
         <table class="of-tags">
@@ -45,7 +45,9 @@
 <!----> {{ else if eq .Key "@catalogue" }}
         {{ range $groupLabel, $group := .Data.Groups }}
         {{ if $.Data.MultiGroup }}<h3>{{ $groupLabel }}</h3>{{ end }}
-        <div class="item-list">{{ range $group }}<a href="/items/{{ .ID }}">⋅ {{ .Label }} ⋅</a>{{ end }}</div>
+        <div class="item-list">{{ range $group }}
+            <a href="/items/{{ .ID }}">{{ .Label }}</a>{{ end }}
+        </div>
         {{ end }}
 <!----> {{ else if eq .Key "@not-found" }}
         <p>{{ .ErrorMessage }}</p>
@@ -54,7 +56,7 @@
 <!----> {{ else if eq .Key "@games/item" }}
         {{ template "games.html" .Data.Properties }}
 <!----> {{ else }}{{ with $props := .Data.Properties }}
-        <table>{{ range $key, $value := $props }}{{ if ne $key "collections" }}{{ if ne $key "tags" }}
+        <table class="prop-table">{{ range $key, $value := $props }}{{ if ne $key "collections" }}{{ if ne $key "tags" }}
             <tr>
                 <td><b>{{ $.Customizer.Capitalize $key }}</b></td>
                 <td>{{ $value }}</td>

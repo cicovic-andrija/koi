@@ -9,18 +9,18 @@ type RenderingCustomizer struct {
 	flags map[string]bool
 }
 
-// CommonDataProperties defines functions that need to be implemented by data types
+// DataObjectInterface defines functions that need to be implemented by data types
 // that are accessed by the template engine during rendering.
-type CommonDataProperties interface {
+type DataObjectInterface interface {
 	Ref() any
 	Properties() map[string]string
-	Groups() map[string][]CommonDataProperties
+	Groups() map[string][]DataObjectInterface
 	MultiGroup() bool
 	Tags() []string
 	HideTags() bool
 }
 
-// CommonBaseObject provides a dummy implementation of CommonDataProperties.
+// CommonBaseObject provides a dummy implementation of DataObjectInterface.
 type CommonBaseObject struct{}
 
 // Test returns the boolean value of flag.
@@ -33,32 +33,32 @@ func (r *RenderingCustomizer) Capitalize(s string) string {
 	return strings.ToUpper(s)
 }
 
-// Ref implements CommonDataProperties.
+// Ref implements DataObjectInterface.
 func (*CommonBaseObject) Ref() any {
 	return nil
 }
 
-// Properties implements CommonDataProperties.
+// Properties implements DataObjectInterface.
 func (*CommonBaseObject) Properties() map[string]string {
 	return nil
 }
 
-// Groups implements CommonDataProperties.
-func (*CommonBaseObject) Groups() map[string][]CommonDataProperties {
+// Groups implements DataObjectInterface.
+func (*CommonBaseObject) Groups() map[string][]DataObjectInterface {
 	return nil
 }
 
-// MultiGroup implements CommonDataProperties.
+// MultiGroup implements DataObjectInterface.
 func (*CommonBaseObject) MultiGroup() bool {
 	return false
 }
 
-// Tags implements CommonDataProperties.
+// Tags implements DataObjectInterface.
 func (*CommonBaseObject) Tags() []string {
 	return nil
 }
 
-// HideTags implements CommonDataProperties.
+// HideTags implements DataObjectInterface.
 func (*CommonBaseObject) HideTags() bool {
 	return false
 }

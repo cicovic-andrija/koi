@@ -63,7 +63,6 @@
     }
     table td {
         min-width: 120px;
-        border-bottom: 1px #d3d3d3 solid;
     }
     table.of-tags td {
         min-width: auto;
@@ -77,6 +76,15 @@
         flex-direction: column;
         align-items: center;
         justify-items: center;
+    }
+    .item-list a::before {
+        content: "⋅ ";
+    }
+    .item-list a::after {
+        content: " ⋅";
+    }
+    .prop-table tr:nth-child(odd) {
+        background-color: #f2f2f2;
     }
     .tag-list {
         display: flex;

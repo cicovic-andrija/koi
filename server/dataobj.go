@@ -19,7 +19,7 @@ import (
 // some operations are performed depending on the type,
 // e.g. the Sort function.
 //
-// Item implements CommonDataProperties.
+// Item implements DataObjectInterface.
 type Item struct {
 	CommonBaseObject
 
@@ -31,7 +31,7 @@ type Item struct {
 
 // Catalogue is a collection of items grouped by type.
 //
-// Catalogue implements CommonDataProperties.
+// Catalogue implements DataObjectInterface.
 type Catalogue struct {
 	CommonBaseObject
 
@@ -39,14 +39,14 @@ type Catalogue struct {
 	hideTags bool
 }
 
-// TagMap implements CommonDataProperties.
+// TagMap implements DataObjectInterface.
 type TagMap struct {
 	CommonBaseObject
 
 	ref map[string]int
 }
 
-// CollectionMap implements CommonDataProperties.
+// CollectionMap implements DataObjectInterface.
 type CollectionMap struct {
 	CommonBaseObject
 
@@ -59,12 +59,12 @@ func (i *Item) setLabel() (ok bool) {
 	return
 }
 
-// Ref implements CommonDataProperties.
+// Ref implements DataObjectInterface.
 func (i *Item) Ref() any {
 	return i
 }
 
-// Properties implements CommonDataProperties.
+// Properties implements DataObjectInterface.
 func (i *Item) Properties() map[string]string {
 	return i.Metadata
 }
@@ -93,7 +93,7 @@ func (c *Catalogue) Tags() (tags []string) {
 	return
 }
 
-// HideTags implements CommonDataProperties.
+// HideTags implements DataObjectInterface.
 func (c *Catalogue) HideTags() bool {
 	return c.hideTags
 }
@@ -103,14 +103,14 @@ func (c *Catalogue) withHiddenTags() *Catalogue {
 	return c
 }
 
-// Groups implements CommonDataProperties.
+// Groups implements DataObjectInterface.
 //
 // This is a bit of an expensive function, since Go doesn't allow conversion between []*Ptr to []interface{},
-// or in this case []*Item to []CommonDataProperties, so conversion needs to be done for each element in every group.
-func (c *Catalogue) Groups() map[string][]CommonDataProperties {
-	groups := make(map[string][]CommonDataProperties)
+// or in this case []*Item to []DataObjectInterface, so conversion needs to be done for each element in every group.
+func (c *Catalogue) Groups() map[string][]DataObjectInterface {
+	groups := make(map[string][]DataObjectInterface)
 	for k, v := range c.groups {
-		slice := make([]CommonDataProperties, len(v))
+		slice := make([]DataObjectInterface, len(v))
 		for j, i := range v {
 			slice[j] = i
 		}
@@ -119,7 +119,7 @@ func (c *Catalogue) Groups() map[string][]CommonDataProperties {
 	return groups
 }
 
-// MultiGroup implements CommonDataProperties.
+// MultiGroup implements DataObjectInterface.
 func (c *Catalogue) MultiGroup() bool {
 	return len(c.groups) > 1
 }
@@ -134,12 +134,12 @@ func NewTagMap(ref map[string]int) *TagMap {
 	return &TagMap{ref: ref}
 }
 
-// Ref implements CommonDataProperties.
+// Ref implements DataObjectInterface.
 func (t *TagMap) Ref() any {
 	return t.ref
 }
 
-// HideTags implements CommonDataProperties.
+// HideTags implements DataObjectInterface.
 func (*TagMap) HideTags() bool {
 	return true
 }
@@ -149,12 +149,12 @@ func NewCollectionMap(ref map[string]string) *CollectionMap {
 	return &CollectionMap{ref: ref}
 }
 
-// Ref implements CommonDataProperties.
+// Ref implements DataObjectInterface.
 func (c *CollectionMap) Ref() any {
 	return c.ref
 }
 
-// HideTags implements CommonDataProperties.
+// HideTags implements DataObjectInterface.
 func (*CollectionMap) HideTags() bool {
 	return true
 }

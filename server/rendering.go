@@ -6,7 +6,6 @@ import (
 )
 
 var (
-	// @hardcoded
 	_pageTemplate = template.Must(
 		template.
 			New("page").
@@ -19,22 +18,24 @@ var (
 			),
 	)
 
-	// @hardcoded
 	_customizer = &RenderingCustomizer{
 		map[string]bool{
 			"@enable-repository-link": true,
 			"@enable-pretty-style":    true,
-			"@enable-kanji":           false,
+			"@enable-kanji":           true,
 		},
 	}
 )
 
+// HTMLPage is a main wrapper object sent to the template engine when rendering HTML.
+// It contains standard elements of an HTML, e.g. Title, as well as a data object
+// that needs to be rendered.
 type HTMLPage struct {
 	Key          string
 	Title        string
 	Supertitle   string
 	ErrorMessage string
-	Data         CommonDataProperties
+	Data         DataObjectInterface
 }
 
 func (p *HTMLPage) Customizer() *RenderingCustomizer {
