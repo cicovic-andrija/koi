@@ -30,13 +30,14 @@ will be visually separated by using Markdown footnote formatting, for example:
 - Acting entities in the software system are SERVER, CLIENT and USER.
 - USER utilizes a CLIENT program (e.g. a web browser) to send requests and present responses from the SERVER.
 - CLIENT and SERVER communicate over a standard network protocol (HTTPS) to exchange requests and responses.
+  - In simpler words, this is a website.
 - SERVER uses a textual (XML) file to persist data over time, called just the database in further text.
 - Database is designed to be human-readable; this eliminates the need to implement import/export mechanisms.
-- SERVER manages generic items.
+- SERVER manages generic items that are stored in the database.
 - SERVER is responsible that every item is uniquely identifiable.
 - USER provides details for each item: a set of (meta)data key-value pairs, called just metadata in further text.
   - Example: for a book (item), USER provides metadata keys like `title`, `author`, `edition` and their corresponding values.
-- Both keys and values in item metadata are always interpreted as text (UTF-8 encoded strings) by the SERVER.
+- Both keys and values in metadata are always interpreted as text (UTF-8 encoded strings) by the SERVER.
 - The only required metadata key-value pair is that which determines how an item will be labeled (item's "name").
 - SERVER ignores items for which a label cannot be determined from the provided metadata set.
 - Item may belong to one or more collections, specified by the USER with a special metadata key that SERVER is able to detect.
@@ -55,11 +56,33 @@ will be visually separated by using Markdown footnote formatting, for example:
   - Example: for a generic `books` type the SERVER would sort a list of books by their labels,
     however the type can be customized so the SERVER uses metadata value for key `sortBy` to sort a list of books.
 - A collection may be composed of items of different types.
-- Items of different types can be tagged with the same tags.
+- Items of different types can be tagged with same tags.
 
-# 4. Expected XML Format
+# 4. Expected Format
 
-TBD
+This section describes the format of XML files that the system is able to parse. An example file can be found in `examples/koidata.xml`. Placeholders that need to be replaced are denoted by curly braces `{likeThis}`.
+
+```xml
+<koidatabase created="{yyyy-mm-dd}" lastModified="{yyyy-mm-dd}">
+  <koitypes enabled="{typename1},{typename2},{typename3}"> <!-- Inside koidatabase -->
+...
+```
+
+The two XML nodes that are expected at the beginning of the file are `<koidatabase>` and `<koitypes>`.
+The first one does not need any explanation, and in version `1.x` the end user is responsible for updating
+the `created` and `lastModified` attributes. This is the root node that contains all the other nodes.
+The `enabled` attribute of the `<koitypes>` node specifies which items the server should not ignore during
+parsing (items are defined later in the file). If an item is of type that is not listed, the server ignores it.
+
+> **Important note: Type names are composed only of lowercase English characters a-z.**
+
+```xml
+    <metadata key="{typename1}/{key1}" default="{defaultValue1}" /> <!-- Inside koitypes -->
+    <metadata key="{typename2}/{key2}" default="{defaultValue2}" />
+    ...
+    <metadata key="{typenameN}/{keyN}" default="{defaultValueN}" />>
+...
+```
 
 # 5. How To: Programming, Building, Testing
 
