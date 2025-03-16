@@ -12,7 +12,7 @@ var (
 			ParseFiles(
 				"data/main.html",
 				"data/style-pretty.html",
-				"data/style-simple.html",
+				"data/style-minimal.html",
 				"data/books.html",
 				"data/games.html",
 			),
@@ -20,9 +20,10 @@ var (
 
 	_customizer = &RenderingCustomizer{
 		map[string]bool{
-			"@enable-repository-link": true,
-			"@enable-pretty-style":    true,
-			"@enable-kanji":           true,
+			"@enable-repository-link":  true,
+			"@enable-pretty-style":     false,
+			"@enable-kanji":            true,
+			"@enable-list-decorations": true,
 		},
 	}
 )

@@ -77,12 +77,14 @@
         align-items: center;
         justify-items: center;
     }
+    {{ if .Test "@enable-list-decorations" }}
     .item-list a::before {
-        content: "⋅ ";
+        content: "~ ";
     }
     .item-list a::after {
-        content: " ⋅";
+        content: " ~";
     }
+    {{ end }}
     .prop-table tr:nth-child(odd) {
         background-color: #f2f2f2;
     }

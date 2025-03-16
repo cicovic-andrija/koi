@@ -12,11 +12,22 @@ type RenderingCustomizer struct {
 // DataObjectInterface defines functions that need to be implemented by data types
 // that are accessed by the template engine during rendering.
 type DataObjectInterface interface {
+	// Ref returns the reference to self or to an internal "raw" data object.
 	Ref() any
+
+	// Properties returns the reference to a map of object's properties.
 	Properties() map[string]string
+
+	// Groups returns groups of other data objects, for container data types.
 	Groups() map[string][]DataObjectInterface
+
+	// MultiGroup returns a flag indicating whether there is more than one group.
 	MultiGroup() bool
+
+	// Tags returns object's tags.
 	Tags() []string
+
+	// HideTags returns a flag indicating whether tags should not be rendered.
 	HideTags() bool
 }
 
