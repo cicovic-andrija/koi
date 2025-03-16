@@ -21,7 +21,7 @@ var (
 	_customizer = &RenderingCustomizer{
 		map[string]bool{
 			"@enable-repository-link":  true,
-			"@enable-pretty-style":     false,
+			"@enable-pretty-style":     true,
 			"@enable-kanji":            true,
 			"@enable-list-decorations": true,
 		},

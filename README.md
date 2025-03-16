@@ -1,4 +1,4 @@
-# Koipond
+# koipond: personal inventory server
 
 ## Contents
 
