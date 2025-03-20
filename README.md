@@ -73,6 +73,8 @@ The first one does not need any explanation, and in version `1.x` the end user i
 the `created` and `lastModified` attributes. This is the root node that contains all the other nodes.
 The `enabled` attribute of the `<koitypes>` node specifies which items the server should not ignore during
 parsing (items are defined later in the file). If an item is of type that is not listed, the server ignores it.
+This is useful for tracking items in the database for tracking purposes only, they will not be visible in the
+system.
 
 > **Important note: Type names are composed only of lowercase English characters a-z.**
 

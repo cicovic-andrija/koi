@@ -1,34 +1,30 @@
 <table class="prop-table">
     <tr>
-        <td><b>Title</b></td>
-        <td><i>{{ .title }}</i></td>
-    </tr>
-    <tr>
         <td><b>Rating</b></td>
-        <td>{{ .rating }} ⭐</td>
+        {{ if eq .rating "5" }}<td>⭐⭐⭐⭐⭐</td>{{ end }}
+        {{ if eq .rating "4" }}<td>⭐⭐⭐⭐</td>{{ end }}
+        {{ if eq .rating "3" }}<td>⭐⭐⭐</td>{{ end }}
+        {{ if eq .rating "2" }}<td>⭐⭐</td>{{ end }}
+        {{ if eq .rating "1" }}<td>⭐</td>{{ end }}
     </tr>
     <tr>
         <td><b>Category</b></td>
         <td>{{ .category }}</td>
     </tr>
     <tr>
-        <td><b>Star</b></td>
-        <td>{{ .star }}</td>
-    </tr>
-    <tr>
         <td><b>Completed</b></td>
         <td>{{ .completed }}</td>
-    </tr>
-    <tr>
-        <td><b>Fit for 2</b></td>
-        <td>{{ .forTwo }}</td>
     </tr>
     <tr>
         <td><b>Platform</b></td>
         <td>{{ .platform }}</td>
     </tr>
     <tr>
-        <td><b>Studio / Designer</b></td>
+        <td><b>Studio / Developer</b></td>
         <td>{{ .developer }}</td>
+    </tr>
+    <tr>
+        <td><b>Favourite</b></td>
+        <td>{{ .star }}</td>
     </tr>
 </table>

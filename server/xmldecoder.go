@@ -172,7 +172,7 @@ func DecodeDatabase(r io.Reader) error {
 				if currentNode != nil {
 					// <ITEM>
 					itemKey := currentNode.Name.Local
-					if !IsValidItemKeyWordForType(itemKey, typeKey) {
+					if !IsValidItemAliasForType(itemKey, typeKey) {
 						trace(_warning, "skipping XML node <%s> entirely: unknown keyword for items of type %q", itemKey, typeKey)
 						decoder.Skip()
 						continue

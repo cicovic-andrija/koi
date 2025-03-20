@@ -1,9 +1,5 @@
 <table class="prop-table">
     <tr>
-        <td><b>Title</b></td>
-        <td><i>{{ .title }}</i></td>
-    </tr>
-    <tr>
         <td><b>Author</b></td>
         <td>{{ .author }}</td>
     </tr>
@@ -21,6 +17,6 @@
     </tr>
     <tr>
         <td><b>Date completed</b></td>
-        <td>{{ .dateCompleted }}</td>
+        <td>{{ if .dateCompleted }}{{ .dateCompleted }}{{ else }}{{ if eq .completed "Yes" }}unknown{{ end }}{{ end }}</td>
     </tr>
 </table>

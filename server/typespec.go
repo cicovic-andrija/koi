@@ -27,6 +27,8 @@ func ItemLabelKey(typeKey string) string {
 		return "title"
 	case "games":
 		return "title"
+	case "boardgames":
+		return "title"
 	default:
 		return MKEY_LABEL
 	}
@@ -39,6 +41,8 @@ func TypeLabel(typeKey string) string {
 		return "Book"
 	case "games":
 		return "Game"
+	case "boardgames":
+		return "Board game"
 	case "equipment":
 		return "Equipment part"
 	default:
@@ -54,6 +58,8 @@ func GroupTypeLabel(typeKey string) string {
 		return "Books"
 	case "games":
 		return "Games"
+	case "boardgames":
+		return "Board games"
 	case "equipment":
 		return "Equipment items"
 	default:
@@ -64,7 +70,7 @@ func GroupTypeLabel(typeKey string) string {
 // IsValidItemKeyWordForType checks if the key is a valid single
 // item keyword in the database (e.g. "book" for "books" type).
 // Keyword "item" is always valid for every type.
-func IsValidItemKeyWordForType(key string, typeKey string) bool {
+func IsValidItemAliasForType(key string, typeKey string) bool {
 	if key == "item" {
 		return true
 	}

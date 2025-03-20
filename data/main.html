@@ -55,6 +55,8 @@
         {{ template "books.html" .Data.Properties }}
 <!----> {{ else if eq .Key "@games/item" }}
         {{ template "games.html" .Data.Properties }}
+<!----> {{ else if eq .Key "@boardgames/item" }}
+        {{ template "boardgames.html" .Data.Properties }}
 <!----> {{ else }}{{ with $props := .Data.Properties }}
         <table class="prop-table">{{ range $key, $value := $props }}{{ if ne $key "collections" }}{{ if ne $key "tags" }}
             <tr>

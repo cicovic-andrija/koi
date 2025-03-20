@@ -15,6 +15,7 @@ var (
 				"data/style-minimal.html",
 				"data/books.html",
 				"data/games.html",
+				"data/boardgames.html",
 			),
 	)
 
