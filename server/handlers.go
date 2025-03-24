@@ -153,6 +153,7 @@ func renderNotFound(w http.ResponseWriter, message string) {
 			Supertitle:   "404",
 			Title:        "Not Found",
 			ErrorMessage: message,
+			Data:         &CommonBaseObject{},
 		},
 	)
 }

@@ -44,7 +44,7 @@
         </table>
 <!----> {{ else if eq .Key "@catalogue" }}
         {{ range $groupLabel, $group := .Data.Groups }}
-        {{ if $.Data.MultiGroup }}<h3>{{ $groupLabel }}</h3>{{ end }}
+        <h3>{{ if $.Data.MultiGroup }}{{ $groupLabel }} <small>/ </small>{{ end }}<small>{{ len $group }} item{{ if gt (len $group) 1 }}s{{ end }}</small></h3>
         <div class="item-list">{{ range $group }}
             <a href="/items/{{ .ID }}">{{ .Label }}</a>{{ end }}
         </div>

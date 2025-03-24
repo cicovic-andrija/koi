@@ -60,12 +60,14 @@ will be visually separated by using Markdown footnote formatting, for example:
 
 # 4. Expected Format
 
-This section describes the format of XML files that the system is able to parse. An example file can be found in `examples/koidata.xml`. Placeholders that need to be replaced are denoted by curly braces `{likeThis}`.
+This section describes the format of XML files that the system is able to parse. An example file can be found in
+`examples/koidata.xml`. Placeholders that need to be replaced are denoted by all caps `LIKE-THIS`.
+
+## 4.1. Header, Enabled Types
 
 ```xml
-<koidatabase created="{yyyy-mm-dd}" lastModified="{yyyy-mm-dd}">
-  <koitypes enabled="{typename1},{typename2},{typename3}"> <!-- Inside koidatabase -->
-...
+<koidatabase created="YYYY-MM-DD" lastModified="YYYY-MM-DD">
+  <koitypes enabled="TYPENAME-1,TYPENAME-2,TYPENAME3"> <!-- Child of <koidatabase> -->
 ```
 
 The two XML nodes that are expected at the beginning of the file are `<koidatabase>` and `<koitypes>`.
@@ -78,13 +80,66 @@ system.
 
 > **Important note: Type names are composed only of lowercase English characters a-z.**
 
+> **Important note: The parser is not able to recognize and ignore XML comments (will be fixed).**
+
+## 4.2. Default Metadata Values
+
 ```xml
-    <metadata key="{typename1}/{key1}" default="{defaultValue1}" /> <!-- Inside koitypes -->
-    <metadata key="{typename2}/{key2}" default="{defaultValue2}" />
-    ...
-    <metadata key="{typenameN}/{keyN}" default="{defaultValueN}" />>
-...
+  <metadata key="TYPENAME-1/KEY-A" default="TYPE-1-DEFAULT-VALUE-A" /> <!-- Child of <koitypes> -->
+  <metadata key="TYPENAME-2/KEY-A" default="TYPE-2-DEFAULT-VALUE-A" />
+  <metadata key="TYPENAME-2/KEY-B" default="TYPE-2-DEFAULT-VALUE-B" />
+  <metadata key="TYPENAME-3/KEY-B" default="TYPE-3-DEFAULT-VALUE-B" />
+</koitypes>
 ```
+
+## 4.3. Collections
+
+```xml
+<collections> <!-- Child of <koidatabase> -->
+  <collection key="COLLECTION-KEY-1" name="COLLECTION-NAME-1" />
+  <collection key="COLLECTION-KEY-2" name="COLLECTION-NAME-2" />
+</collections>
+```
+
+## 4.4. Items Grouped by Types
+
+```xml
+<data> <!-- Child of <koidatabase> -->
+  <TYPENAME-1>
+    ... <!-- Items of type TYPENAME-1 -->
+  </TYPENAME-1>
+  <TYPENAME-2>
+    ... <!-- Items of type TYPENAME-2 -->
+  </TYPENAME-2>
+</data>
+```
+
+## 4.5. Items
+
+```xml
+<TYPENAME-1> <!-- Child of <data> -->
+  <item label="ITEM-LABEL" KEY-1="VAL-1" KEY-2="VAL-2" ... />
+  <!-- OR -->
+  <TYPE-1-SPECIFIC-KEYWORD label="ITEM-LABEL" KEY-1="VAL-1" KEY-2="VAL-2" ... />
+  <!-- Mixing of this two formats is allowed -->
+</TYPENAME-2>
+```
+
+### 4.5.1. Additional Notes About Items and Types
+> **Important note: Label can also be determined from other key.**
+
+> **Important note: Collections.**
+
+> **Important note: Tags.**
+
+## 4.6. Virtual End of File
+
+```xml
+</koidatabase> <!-- EOF -->
+```
+
+Parser does not attempt to look for tokens past this point in the file - it considers the closing
+token of `</koidatabase>` as EOF, even if the file has content after the token.
 
 # 5. How To: Programming, Building, Testing
 
@@ -96,7 +151,7 @@ $ go build -o koipond main.go
 
 ### Run locally (development mode)
 
-TODO: Mention store/
+TODO: Mention `store/`
 
 ```bash
 $ KOIPOND_MODE=dev go run main.go
