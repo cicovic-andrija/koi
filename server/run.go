@@ -9,7 +9,7 @@ import (
 
 // Run configures the system, builds the database, and boots the server.
 func Run() {
-	trace(_control, "main: start: %s v1.4", filepath.Base(os.Args[0]))
+	trace(_control, "main: start: %s v1.5", filepath.Base(os.Args[0]))
 	readEnvironment()
 	buildDatabase()
 	_serverControl.boot()
