@@ -63,34 +63,41 @@ will be visually separated by using Markdown footnote formatting, for example:
 This section describes the format of XML files that the system is able to parse. An example file can be found in
 `examples/koidata.xml`. Placeholders that need to be replaced are denoted by all caps `LIKE-THIS`.
 
-## 4.1. Header, Enabled Types
+## 4.1. Root
 
 ```xml
 <koidatabase created="YYYY-MM-DD" lastModified="YYYY-MM-DD">
-  <koitypes enabled="TYPENAME-1,TYPENAME-2,TYPENAME3"> <!-- Child of <koidatabase> -->
 ```
 
-The two XML nodes that are expected at the beginning of the file are `<koidatabase>` and `<koitypes>`.
-The first one does not need any explanation, and in version `1.x` the end user is responsible for updating
-the `created` and `lastModified` attributes. This is the root node that contains all the other nodes.
-The `enabled` attribute of the `<koitypes>` node specifies which items the server should not ignore during
-parsing (items are defined later in the file). If an item is of type that is not listed, the server ignores it.
-This is useful for tracking items in the database for tracking purposes only, they will not be visible in the
-system.
-
-> **Important note: Type names are composed only of lowercase English characters a-z.**
+The root XML node that is expected at the beginning of the file is the `<koidatabase>` node;
+it should be the parent of all other nodes that the parser is scanning for. In version `1.x`,
+the end user is responsible for the `created` and `lastModified` attributes.
 
 > **Important note: The parser is not able to recognize and ignore XML comments (will be fixed).**
 
-## 4.2. Default Metadata Values
+## 4.2. Enabled Types and Default Values
 
 ```xml
-  <metadata key="TYPENAME-1/KEY-A" default="TYPE-1-DEFAULT-VALUE-A" /> <!-- Child of <koitypes> -->
+<koitypes enabled="TYPENAME-1,TYPENAME-2,TYPENAME3"> <!-- Child of <koidatabase> -->
+  <metadata key="TYPENAME-1/KEY-A" default="TYPE-1-DEFAULT-VALUE-A" />
   <metadata key="TYPENAME-2/KEY-A" default="TYPE-2-DEFAULT-VALUE-A" />
   <metadata key="TYPENAME-2/KEY-B" default="TYPE-2-DEFAULT-VALUE-B" />
   <metadata key="TYPENAME-3/KEY-B" default="TYPE-3-DEFAULT-VALUE-B" />
 </koitypes>
 ```
+
+The immediate child of the root node should be the `<koitypes>` node. The `enabled` attribute
+should specify which item types will be considered during item scanning later on. If there are
+items of a type not listed here, the server will ignore them. This is useful for tracking
+items in the database for tracking purposes only, as they will not be loaded into the system.
+
+> **Important note: Type names are composed only of lowercase English characters a-z.**
+
+The `<koitypes>` node can optionally have one or more `<metadata>` child nodes which should
+specify default metadata values for items that will not explicitly declare values for given
+keys. An attribute in format `key="TYPENAME-1/KEY-A"` designates all items of type `TYPENAME-1`
+that have not explicitly declared a value for key `KEY-A`. They will be assigned the value
+given in the `default` attribute for key `KEY-A`, implicitly.
 
 ## 4.3. Collections
 
@@ -205,7 +212,10 @@ $ docker kill -s SIGINT koipond-server
 ### Build Docker image
 
 ```bash
-$ docker build -t acicovic/koipond:latest .
+$ docker build -t acicovic/koipond:v1.x .
+$ docker tag acicovic/koipond:v1.x acicovic/koipond:latest
+$ docker push acicovic/koipond:v1.x
+$ docker push acicovic/koipond:latest
 ```
 
 > Substitute image name.

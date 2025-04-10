@@ -1,6 +1,9 @@
 <style type="text/css">
-    html {
-        background-color: #E3E3E3;
+    @font-face {
+    font-family: "custom-regular";
+    font-style: normal;
+    font-weight: 400;
+    src: url(/static/ProzaLibre-Regular.woff2) format("woff2");
     }
     body {
         display: flex;
@@ -10,17 +13,19 @@
         margin: 0 auto;
         min-height: 100vh;
         max-width: 650px;
-        background-color: #F9F9F9;
-        border-left: 2px solid #999999;
-        border-right: 2px solid #999999;
-        line-height: 1.4;
-        font-size: 18px;
-        font-family: "Lato", "Arial", "Helvetica", sans-serif;
-        color: #008080;
+        line-height: 1.5;
+        font-size: 22px;
+        font-family: custom-regular, Optima, Candara, Calibri, Arial, sans-serif;
+        color: #4c4f69;
+        background-color: white;
     }
     @media only screen and (max-width: 768px) {
         body {
             max-width: 100%;
+            font-size: 18px;
+        }
+        .hide-on-small {
+            display: none;
         }
     }
     @media only screen and (min-width: 1200px) {
@@ -38,15 +43,31 @@
     }
     h1, h4 {
         margin-top: 0;
-        margin-bottom: 0;
         line-height: 1;
         text-align: center;
-        color: #FF7F50;
+    }
+    h1 {
+        color: #5c5f77;
+        margin-bottom: 0;
+    }
+    h4 {
+        color: #8c8fa1;
+        margin-bottom: 8px;
     }
     h2, h3 {
         line-height: 1;
         text-align: center;
-        color: #FF7F50;
+    }
+    h2 {
+        color: #8c8fa1;
+
+    }
+    h3 {
+        color: #008080;
+    }
+    hr {
+        border-style: dashed;
+        color: #5c5f77;
     }
     p {
         text-align: center;
@@ -54,10 +75,10 @@
     a {
         text-align: center;
         text-decoration: none;
-        color: #008080;
+        color: #8c8fa1;
     }
     a:hover {
-        color: #FF7F50;
+        color: #5c5f77;
     }
     table {
         margin-top: 32px;
@@ -100,17 +121,17 @@
     }
     .tag-link {
         display: inline-block;
-        padding: 1px 10px;
+        padding: 2px 10px;
         margin: 2px 2px;
         font-size: small;
         font-weight: bold;
-        background-color: #FF7F50;
+        background-color: #008080;
         color: white;
         border-radius: 4px;
         transition: background-color 0.3s ease;
     }
     .tag-link:hover {
-        background-color: #008080;
-        color: white;
+        color: #008080;
+        background-color: white;
     }
     </style> <!-- intentional indentation -->

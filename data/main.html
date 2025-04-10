@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{ if .Customizer.Test "@enable-pretty-style" }}{{ template "style-pretty.html" .Customizer }}{{ else }}{{ template "style-minimal.html" }}{{ end }}
+    {{ template "style-pretty.html" .Customizer }}
+
     <title>{{ .Title }}</title>
 </head>
 <body>
@@ -17,6 +18,7 @@
         <b><a href="/items">
             {{ if .Customizer.Test "@enable-kanji" }}鯉 {{ end }}items
         </a></b>
+        <hr>
     </header>
 
     <main>
@@ -67,10 +69,14 @@
 <!----> {{ end }}
     </main>
 
-    <footer>{{ if .Customizer.Test "@enable-repository-link" }}
-        <b><a href="https://github.com/cicovic-andrija/koipond" target="_blank">
-            {{ if .Customizer.Test "@enable-kanji" }}機 {{ end }}code
-        </a></b>{{ end }}
+    <footer>
+        <hr>
+        <small>
+            機
+            <a href="https://acicovic.me" target="_blank">Andrija Cicović </a><span class="hide-on-small">
+            <span class="hide-on-small"> ⋅ <a href="#">top⤴</a> ⋅
+            <a href="https://github.com/cicovic-andrija/koipond" target="_blank">repository⤤</a></span>
+        </small>
     </footer>
 </body>
 </html>

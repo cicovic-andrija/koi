@@ -12,7 +12,6 @@ var (
 			ParseFiles(
 				"data/main.html",
 				"data/style-pretty.html",
-				"data/style-minimal.html",
 				"data/books.html",
 				"data/games.html",
 				"data/boardgames.html",
@@ -21,12 +20,12 @@ var (
 
 	_customizer = &RenderingCustomizer{
 		map[string]bool{
-			"@enable-repository-link":  true,
-			"@enable-pretty-style":     true,
-			"@enable-kanji":            true,
+			"@enable-kanji":            false,
 			"@enable-list-decorations": true,
 		},
 	}
+
+	_fileServer = http.FileServer(http.Dir("data/static"))
 )
 
 // HTMLPage is a main wrapper object sent to the template engine when rendering HTML.

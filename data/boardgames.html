@@ -5,7 +5,7 @@
     </tr>
     <tr>
         <td><b>BGG Link</b></td>
-        <td><a href="{{ .bggurl }}" target="_blank">{{ .title }}↗</a></td>
+        <td><a href="{{ .bggurl }}" target="_blank">{{ .title }}⤤</a></td>
     </tr>
     <tr>
         <td><b>#Players</b></td>
@@ -17,11 +17,15 @@
     </tr>
     <tr>
         <td><b>Rating</b></td>
-        {{ if eq .rating "5" }}<td>⭐⭐⭐⭐⭐</td>{{ end }}
-        {{ if eq .rating "4" }}<td>⭐⭐⭐⭐</td>{{ end }}
-        {{ if eq .rating "3" }}<td>⭐⭐⭐</td>{{ end }}
-        {{ if eq .rating "2" }}<td>⭐⭐</td>{{ end }}
-        {{ if eq .rating "1" }}<td>⭐</td>{{ end }}
+        {{ if .rating }}
+        {{ if eq .rating "5" }}<td>*****</td>{{ end }}
+        {{ if eq .rating "4" }}<td>****</td>{{ end }}
+        {{ if eq .rating "3" }}<td>***</td>{{ end }}
+        {{ if eq .rating "2" }}<td>**</td>{{ end }}
+        {{ if eq .rating "1" }}<td>*</td>{{ end }}
+        {{ else }}
+        <td></td>
+        {{ end }}
     </tr>
     <tr>
         <td><b>Favourite</b></td>

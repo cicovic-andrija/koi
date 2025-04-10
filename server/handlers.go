@@ -18,12 +18,19 @@ func multiHandler() http.Handler {
 	register("GET /collections", renderCollections)
 	register("GET /collections/{collection}", renderCollection)
 	// /collections/{$} -> 404
+
 	register("GET /tags", renderTags)
 	register("GET /tags/{tag}", renderTag)
 	// /tags/{$} -> 404
+
 	register("GET /items", renderItems)
 	register("GET /items/{id}", renderItem)
 	// /items/{$} 404
+
+	// static file server
+	mux.Handle("GET /static/", http.StripPrefix("/static/", _fileServer))
+	trace(_https, "static file server registered for tree /static/")
+
 	register("GET /", defaultHandler)
 
 	return mux
@@ -38,7 +45,7 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 			icon *os.File
 			fi   os.FileInfo
 		)
-		icon, err := os.Open("data/favicon.ico")
+		icon, err := os.Open("data/static/favicon.ico")
 		if err == nil {
 			fi, err = icon.Stat()
 		}
