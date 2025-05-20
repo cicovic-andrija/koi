@@ -124,11 +124,6 @@ func (c *Catalogue) MultiGroup() bool {
 	return len(c.groups) > 1
 }
 
-// HasMultipleGroups reports whether a Catalogue has more than one group.
-func (c *Catalogue) HasMultipleGroups() bool {
-	return len(c.groups) > 1
-}
-
 // NewTagMap return a pointer to a new TagMap object.
 func NewTagMap(ref map[string]int) *TagMap {
 	return &TagMap{ref: ref}
