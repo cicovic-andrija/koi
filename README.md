@@ -1,10 +1,8 @@
-# koipond: personal inventory server
-
-`v1.x`, `self-hosted`, `minimal`, `do-it-yourself`, `web-server`, `docker-containerized`
+# koi: personal inventory server
 
 # 1. About
 
-`koipond` is a software system for personal inventory management. The north star of the project is
+`koi` is a software system for personal inventory management. The north star of the project is
 to provide a simple and minimal web interface that can be used to browse and update small-scale
 collections of items (thousands of items), with raw data persisted in textual, human-readable,
 standard format. It is designed to be easily extensible, customizable and self-hosted, for users
@@ -58,97 +56,7 @@ will be visually separated by using Markdown footnote formatting, for example:
 - A collection may be composed of items of different types.
 - Items of different types can be tagged with same tags.
 
-# 4. Expected Format
-
-This section describes the format of XML files that the system is able to parse. An example file can be found in
-`examples/koidata.xml`. Placeholders that need to be replaced are denoted by all caps `LIKE-THIS`.
-
-## 4.1. Root
-
-```xml
-<koidatabase created="YYYY-MM-DD" lastModified="YYYY-MM-DD">
-```
-
-The root XML node that is expected at the beginning of the file is the `<koidatabase>` node;
-it should be the parent of all other nodes that the parser is scanning for. In version `1.x`,
-the end user is responsible for the `created` and `lastModified` attributes.
-
-> **Important note: The parser is not able to recognize and ignore XML comments (will be fixed).**
-
-## 4.2. Enabled Types and Default Values
-
-```xml
-<koitypes enabled="TYPENAME-1,TYPENAME-2,TYPENAME3"> <!-- Child of <koidatabase> -->
-  <metadata key="TYPENAME-1/KEY-A" default="TYPE-1-DEFAULT-VALUE-A" />
-  <metadata key="TYPENAME-2/KEY-A" default="TYPE-2-DEFAULT-VALUE-A" />
-  <metadata key="TYPENAME-2/KEY-B" default="TYPE-2-DEFAULT-VALUE-B" />
-  <metadata key="TYPENAME-3/KEY-B" default="TYPE-3-DEFAULT-VALUE-B" />
-</koitypes>
-```
-
-The immediate child of the root node should be the `<koitypes>` node. The `enabled` attribute
-should specify which item types will be considered during item scanning later on. If there are
-items of a type not listed here, the server will ignore them. This is useful for tracking
-items in the database for tracking purposes only, as they will not be loaded into the system.
-
-> **Important note: Type names are composed only of lowercase English characters a-z.**
-
-The `<koitypes>` node can optionally have one or more `<metadata>` child nodes which should
-specify default metadata values for items that will not explicitly declare values for given
-keys. An attribute in format `key="TYPENAME-1/KEY-A"` designates all items of type `TYPENAME-1`
-that have not explicitly declared a value for key `KEY-A`. They will be assigned the value
-given in the `default` attribute for key `KEY-A`, implicitly.
-
-## 4.3. Collections
-
-```xml
-<collections> <!-- Child of <koidatabase> -->
-  <collection key="COLLECTION-KEY-1" name="COLLECTION-NAME-1" />
-  <collection key="COLLECTION-KEY-2" name="COLLECTION-NAME-2" />
-</collections>
-```
-
-## 4.4. Items Grouped by Types
-
-```xml
-<data> <!-- Child of <koidatabase> -->
-  <TYPENAME-1>
-    ... <!-- Items of type TYPENAME-1 -->
-  </TYPENAME-1>
-  <TYPENAME-2>
-    ... <!-- Items of type TYPENAME-2 -->
-  </TYPENAME-2>
-</data>
-```
-
-## 4.5. Items
-
-```xml
-<TYPENAME-1> <!-- Child of <data> -->
-  <item label="ITEM-LABEL" KEY-1="VAL-1" KEY-2="VAL-2" ... />
-  <!-- OR -->
-  <TYPE-1-SPECIFIC-KEYWORD label="ITEM-LABEL" KEY-1="VAL-1" KEY-2="VAL-2" ... />
-  <!-- Mixing of this two formats is allowed -->
-</TYPENAME-2>
-```
-
-### 4.5.1. Additional Notes About Items and Types
-> **Important note: Label can also be determined from other key.**
-
-> **Important note: Collections.**
-
-> **Important note: Tags.**
-
-## 4.6. Virtual End of File
-
-```xml
-</koidatabase> <!-- EOF -->
-```
-
-Parser does not attempt to look for tokens past this point in the file - it considers the closing
-token of `</koidatabase>` as EOF, even if the file has content after the token.
-
-# 5. How To: Programming, Building, Testing
+# 4. How To: Programming, Building, Testing
 
 ### Build
 
@@ -164,7 +72,7 @@ TODO: Mention `store/`
 $ KOIPOND_MODE=dev go run main.go
 ```
 
-# 6. How To: Deployment
+# 5. How To: Deployment
 
 > TCP port in dev mode is hard-coded to 8072.
 
