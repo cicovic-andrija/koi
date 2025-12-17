@@ -10,11 +10,6 @@ that are comfortable with technology and prefer minimal systems.
 
 In the current version `1.x`, the server offers only browsing (read-only) functionality, meaning
 that the XML file used for persistent storage must be populated/updated through a text editor program.
-For the one person currently working on this project, that was a high enough bar for version `1.x` of
-the system (demo link below). This decision also aligns with the idea of a target audience for this
-system. Version `2.x` will offer read-write capabilities (to be implemented).
-
-### Version `1.x` Demo: [https://inventory.acicovic.me](https://inventory.acicovic.me)
 
 # 2. Before Further Reading
 
@@ -27,8 +22,6 @@ will be visually separated by using Markdown footnote formatting, for example:
 
 - Acting entities in the software system are SERVER, CLIENT and USER.
 - USER utilizes a CLIENT program (e.g. a web browser) to send requests and present responses from the SERVER.
-- CLIENT and SERVER communicate over a standard network protocol (HTTPS) to exchange requests and responses.
-  - In simpler words, this is a website.
 - SERVER uses a textual (XML) file to persist data over time, called just the database in further text.
 - Database is designed to be human-readable; this eliminates the need to implement import/export mechanisms.
 - SERVER manages generic items that are stored in the database.
